@@ -6,6 +6,8 @@ build:
 deploy:
   addons:
     postgres: 
+    rpc:
+      - eth-sepolia:http
   processor:
     cmd:
       - node

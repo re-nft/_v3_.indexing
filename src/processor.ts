@@ -6,6 +6,7 @@ import * as rentalManagerAbi from './abi/rental-manager'
 export const processor = new EvmBatchProcessor()
     .setDataSource({
         archive: lookupArchive('sepolia', {type: 'EVM'}),
+        chain: process.env.RPC_ETH_SEPOLIA_HTTP,
     })
     .setFields({
             log: {

@@ -8,3 +8,4 @@
 /.idea
 
 pnpm-lock.yaml
+.env
