@@ -2,8 +2,8 @@ import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, I
 import * as marshal from "./marshal"
 
 @Entity_()
-export class ContractFunctionRentFromZone {
-    constructor(props?: Partial<ContractFunctionRentFromZone>) {
+export class RentalFactoryEventRentalSafeDeployment {
+    constructor(props?: Partial<RentalFactoryEventRentalSafeDeployment>) {
         Object.assign(this, props)
     }
 
@@ -28,36 +28,20 @@ export class ContractFunctionRentFromZone {
 
     @Index_()
     @Column_("text", {nullable: false})
-    functionName!: string
-
-    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: true})
-    functionValue!: bigint | undefined | null
-
-    @Index_()
-    @Column_("bool", {nullable: true})
-    functionSuccess!: boolean | undefined | null
-
-    @Column_("jsonb", {nullable: false})
-    payload!: unknown
+    eventName!: string
 
     @Column_("text", {nullable: false})
-    seaportOrderHash!: string
+    safe!: string
 
     @Column_("text", {nullable: false})
-    seaportZoneHash!: string
-
-    @Column_("jsonb", {nullable: false})
-    offer!: unknown
-
-    @Column_("jsonb", {nullable: false})
-    consideration!: unknown
+    rentalManager!: string
 
     @Column_("text", {nullable: false})
-    seaportFulfiller!: string
+    guard!: string
 
     @Column_("text", {nullable: false})
-    offerer!: string
+    owner!: string
 
-    @Column_("text", {nullable: false})
-    signature!: string
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    nonce!: bigint
 }

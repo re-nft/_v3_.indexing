@@ -14,7 +14,21 @@ type Transaction @entity {
     status: Int @index
 }
 
-type ContractEventRentalStarted @entity {
+type RentalFactoryEventRentalSafeDeployment @entity {
+    id: ID!
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    eventName: String! @index
+    safe: String!
+    rentalManager: String!
+    guard: String!
+    owner: String!
+    nonce: BigInt!
+}
+
+type RentalManagerEventRentalStarted @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -30,7 +44,7 @@ type ContractEventRentalStarted @entity {
     rentEndTimestamp: BigInt!
 }
 
-type ContractEventRentalStopped @entity {
+type RentalManagerEventRentalStopped @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -45,7 +59,7 @@ type ContractEventRentalStopped @entity {
     stopper: String!
 }
 
-type ContractFunctionRentFromZone @entity {
+type RentalManagerFunctionRentFromZone @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
@@ -64,7 +78,7 @@ type ContractFunctionRentFromZone @entity {
     signature: String!
 }
 
-type ContractFunctionSetZone @entity {
+type RentalManagerFunctionSetZone @entity {
     id: ID!
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index

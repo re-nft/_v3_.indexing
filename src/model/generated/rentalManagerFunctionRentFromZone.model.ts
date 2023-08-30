@@ -2,8 +2,8 @@ import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, I
 import * as marshal from "./marshal"
 
 @Entity_()
-export class ContractEventRentalStarted {
-    constructor(props?: Partial<ContractEventRentalStarted>) {
+export class RentalManagerFunctionRentFromZone {
+    constructor(props?: Partial<RentalManagerFunctionRentFromZone>) {
         Object.assign(this, props)
     }
 
@@ -28,29 +28,36 @@ export class ContractEventRentalStarted {
 
     @Index_()
     @Column_("text", {nullable: false})
-    eventName!: string
+    functionName!: string
+
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: true})
+    functionValue!: bigint | undefined | null
 
     @Index_()
+    @Column_("bool", {nullable: true})
+    functionSuccess!: boolean | undefined | null
+
+    @Column_("jsonb", {nullable: false})
+    payload!: unknown
+
     @Column_("text", {nullable: false})
     seaportOrderHash!: string
 
-    @Index_()
     @Column_("text", {nullable: false})
-    renterWallet!: string
+    seaportZoneHash!: string
 
-    @Index_()
-    @Column_("text", {nullable: false})
-    lender!: string
+    @Column_("jsonb", {nullable: false})
+    offer!: unknown
 
-    @Column_("text", {nullable: false})
-    collection!: string
-
-    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    tokenId!: bigint
+    @Column_("jsonb", {nullable: false})
+    consideration!: unknown
 
     @Column_("text", {nullable: false})
-    fulfiller!: string
+    seaportFulfiller!: string
 
-    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    rentEndTimestamp!: bigint
+    @Column_("text", {nullable: false})
+    offerer!: string
+
+    @Column_("text", {nullable: false})
+    signature!: string
 }

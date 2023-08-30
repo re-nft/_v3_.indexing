@@ -2,8 +2,8 @@ import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, I
 import * as marshal from "./marshal"
 
 @Entity_()
-export class ContractFunctionSetZone {
-    constructor(props?: Partial<ContractFunctionSetZone>) {
+export class RentalManagerEventRentalStarted {
+    constructor(props?: Partial<RentalManagerEventRentalStarted>) {
         Object.assign(this, props)
     }
 
@@ -28,15 +28,29 @@ export class ContractFunctionSetZone {
 
     @Index_()
     @Column_("text", {nullable: false})
-    functionName!: string
-
-    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: true})
-    functionValue!: bigint | undefined | null
+    eventName!: string
 
     @Index_()
-    @Column_("bool", {nullable: true})
-    functionSuccess!: boolean | undefined | null
+    @Column_("text", {nullable: false})
+    seaportOrderHash!: string
+
+    @Index_()
+    @Column_("text", {nullable: false})
+    renterWallet!: string
+
+    @Index_()
+    @Column_("text", {nullable: false})
+    lender!: string
 
     @Column_("text", {nullable: false})
-    newZone!: string
+    collection!: string
+
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    tokenId!: bigint
+
+    @Column_("text", {nullable: false})
+    fulfiller!: string
+
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    rentEndTimestamp!: bigint
 }

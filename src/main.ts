@@ -1,4 +1,4 @@
-import {contract} from './mapping'
+import {rentalFactory, rentalManager} from './mapping'
 import {processor} from './processor'
 import {db, Store} from './db'
 import {EntityBuffer} from './entityBuffer'
@@ -15,14 +15,20 @@ processor.run(db, async (ctx) => {
         )
 
         for (let log of block.logs) {
+            if (log.address === '0x2c2bba22aa19ba34bc5ba65e6c35ce54da36a33d') {
+                rentalFactory.parseEvent(ctx, log)
+            }
             if (log.address === '0xea0b609f81b3d7699a970e670ec471daf687e5c2') {
-                contract.parseEvent(ctx, log)
+                rentalManager.parseEvent(ctx, log)
             }
         }
 
         for (let transaction of block.transactions) {
+            if (transaction.to === '0x2c2bba22aa19ba34bc5ba65e6c35ce54da36a33d') {
+                rentalFactory.parseFunction(ctx, transaction)
+            }
             if (transaction.to === '0xea0b609f81b3d7699a970e670ec471daf687e5c2') {
-                contract.parseFunction(ctx, transaction)
+                rentalManager.parseFunction(ctx, transaction)
             }
 
             EntityBuffer.add(

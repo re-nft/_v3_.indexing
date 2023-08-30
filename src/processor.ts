@@ -1,6 +1,7 @@
 import {EvmBatchProcessor, EvmBatchProcessorFields, BlockHeader, Log as _Log, Transaction as _Transaction} from '@subsquid/evm-processor'
 import {lookupArchive} from '@subsquid/archive-registry'
-import * as contractAbi from './abi/rental-manager'
+import * as rentalFactoryAbi from './abi/rental-factory'
+import * as rentalManagerAbi from './abi/rental-manager'
 
 export const processor = new EvmBatchProcessor()
     .setDataSource({
@@ -21,10 +22,19 @@ export const processor = new EvmBatchProcessor()
         }
     })
     .addLog({
+        address: ['0x2c2bba22aa19ba34bc5ba65e6c35ce54da36a33d'],
+        topic0: [
+            rentalFactoryAbi.events['RentalSafeDeployment'].topic,
+        ],
+        range: {
+            from: 3923754,
+        },
+    })
+    .addLog({
         address: ['0xea0b609f81b3d7699a970e670ec471daf687e5c2'],
         topic0: [
-            contractAbi.events['RentalStarted'].topic,
-            contractAbi.events['RentalStopped'].topic,
+            rentalManagerAbi.events['RentalStarted'].topic,
+            rentalManagerAbi.events['RentalStopped'].topic,
         ],
         range: {
             from: 3923754,
@@ -33,8 +43,8 @@ export const processor = new EvmBatchProcessor()
     .addTransaction({
         to: ['0xea0b609f81b3d7699a970e670ec471daf687e5c2'],
         sighash: [
-            contractAbi.functions['rentFromZone'].sighash,
-            contractAbi.functions['setZone'].sighash,
+            rentalManagerAbi.functions['rentFromZone'].sighash,
+            rentalManagerAbi.functions['setZone'].sighash,
         ],
         range: {
             from: 3923754,

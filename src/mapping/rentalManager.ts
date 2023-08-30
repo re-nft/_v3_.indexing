@@ -2,7 +2,7 @@ import {DataHandlerContext} from '@subsquid/evm-processor'
 import {toJSON} from '@subsquid/util-internal-json'
 import {Store} from '../db'
 import {EntityBuffer} from '../entityBuffer'
-import {ContractEventRentalStarted, ContractEventRentalStopped, ContractFunctionRentFromZone, ContractFunctionSetZone} from '../model'
+import {RentalManagerEventRentalStarted, RentalManagerEventRentalStopped, RentalManagerFunctionRentFromZone, RentalManagerFunctionSetZone} from '../model'
 import * as spec from '../abi/rental-manager'
 import {Log, Transaction} from '../processor'
 
@@ -15,7 +15,7 @@ export function parseEvent(ctx: DataHandlerContext<Store>, log: Log) {
             case spec.events['RentalStarted'].topic: {
                 let e = spec.events['RentalStarted'].decode(log)
                 EntityBuffer.add(
-                    new ContractEventRentalStarted({
+                    new RentalManagerEventRentalStarted({
                         id: log.id,
                         blockNumber: log.block.height,
                         blockTimestamp: new Date(log.block.timestamp),
@@ -36,7 +36,7 @@ export function parseEvent(ctx: DataHandlerContext<Store>, log: Log) {
             case spec.events['RentalStopped'].topic: {
                 let e = spec.events['RentalStopped'].decode(log)
                 EntityBuffer.add(
-                    new ContractEventRentalStopped({
+                    new RentalManagerEventRentalStopped({
                         id: log.id,
                         blockNumber: log.block.height,
                         blockTimestamp: new Date(log.block.timestamp),
@@ -66,7 +66,7 @@ export function parseFunction(ctx: DataHandlerContext<Store>, transaction: Trans
             case spec.functions['rentFromZone'].sighash: {
                 let f = spec.functions['rentFromZone'].decode(transaction.input)
                 EntityBuffer.add(
-                    new ContractFunctionRentFromZone({
+                    new RentalManagerFunctionRentFromZone({
                         id: transaction.id,
                         blockNumber: transaction.block.height,
                         blockTimestamp: new Date(transaction.block.timestamp),
@@ -90,7 +90,7 @@ export function parseFunction(ctx: DataHandlerContext<Store>, transaction: Trans
             case spec.functions['setZone'].sighash: {
                 let f = spec.functions['setZone'].decode(transaction.input)
                 EntityBuffer.add(
-                    new ContractFunctionSetZone({
+                    new RentalManagerFunctionSetZone({
                         id: transaction.id,
                         blockNumber: transaction.block.height,
                         blockTimestamp: new Date(transaction.block.timestamp),

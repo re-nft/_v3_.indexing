@@ -17,3 +17,4 @@ contracts:
     events:
       - RentalStarted
       - RentalStopped
+    functions: true

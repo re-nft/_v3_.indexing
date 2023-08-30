@@ -1,22 +1,10 @@
 # Readme
 
-Note that rental-manager.json abi (abi/rental-manager.json) is not a full abi.
+Squid is generated from `squidgen.yaml`. Reason we are using yaml file instead of using `squidgen` is because our source of truth
+is more than one contract. And the only way to index more than one contract at the same time and have all artifacts generated,
+you must use squidgen.yaml config file: https://docs.subsquid.io/basics/squid-gen/#configuration
 
-This is because squid will use everything defined on the abi to generate types and migrations.
-
-For that reason, when over-writing the existing abi, make sure you remove functions and events that we are no interested in indexing.
-
-To generate sepolia artifacts from the abi run:
-
-```bash
-sqd generate \
---address "0xea0b609F81B3D7699a970e670ec471Daf687E5c2" \
---archive "sepolia" \
---event "*" \
---function "*" \
---from 3923754 \
---abi "abi/rental-manager.json"
-```
+Therefore, **ignore everything below**. Keeping it for reference for now. Eventually will remove it.
 
 # Squid ABI template
 
