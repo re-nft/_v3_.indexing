@@ -14,28 +14,6 @@ type Transaction @entity {
     status: Int @index
 }
 
-type ContractEventModuleDewhitelisted @entity {
-    id: ID!
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    eventName: String! @index
-    module: String! @index
-    dewhitelister: String! @index
-}
-
-type ContractEventModuleWhitelisted @entity {
-    id: ID!
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    eventName: String! @index
-    module: String! @index
-    whitelister: String! @index
-}
-
 type ContractEventRentalStarted @entity {
     id: ID!
     blockNumber: Int! @index
@@ -67,44 +45,6 @@ type ContractEventRentalStopped @entity {
     stopper: String!
 }
 
-type ContractFunctionDewhitelistModule @entity {
-    id: ID!
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    functionName: String! @index
-    functionValue: BigInt
-    functionSuccess: Boolean @index
-    module: String!
-}
-
-type ContractFunctionRelayBatch @entity {
-    id: ID!
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    functionName: String! @index
-    functionValue: BigInt
-    functionSuccess: Boolean @index
-    recipients: JSON!
-    items: JSON!
-    itemIds: JSON!
-}
-
-type ContractFunctionRelayBatchRentals @entity {
-    id: ID!
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    functionName: String! @index
-    functionValue: BigInt
-    functionSuccess: Boolean @index
-    rentals: JSON!
-}
-
 type ContractFunctionRentFromZone @entity {
     id: ID!
     blockNumber: Int! @index
@@ -124,30 +64,6 @@ type ContractFunctionRentFromZone @entity {
     signature: String!
 }
 
-type ContractFunctionSetRentalFactory @entity {
-    id: ID!
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    functionName: String! @index
-    functionValue: BigInt
-    functionSuccess: Boolean @index
-    factory: String!
-}
-
-type ContractFunctionSetSigner @entity {
-    id: ID!
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    functionName: String! @index
-    functionValue: BigInt
-    functionSuccess: Boolean @index
-    newSigner: String!
-}
-
 type ContractFunctionSetZone @entity {
     id: ID!
     blockNumber: Int! @index
@@ -158,55 +74,5 @@ type ContractFunctionSetZone @entity {
     functionValue: BigInt
     functionSuccess: Boolean @index
     newZone: String!
-}
-
-type ContractFunctionStopRent @entity {
-    id: ID!
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    functionName: String! @index
-    functionValue: BigInt
-    functionSuccess: Boolean @index
-    payload: JSON!
-    signature: String!
-}
-
-type ContractFunctionStopRentBatch @entity {
-    id: ID!
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    functionName: String! @index
-    functionValue: BigInt
-    functionSuccess: Boolean @index
-    payload: JSON!
-    signature: String!
-}
-
-type ContractFunctionTransferAdmin @entity {
-    id: ID!
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    functionName: String! @index
-    functionValue: BigInt
-    functionSuccess: Boolean @index
-    newAdmin: String!
-}
-
-type ContractFunctionWhitelistModule @entity {
-    id: ID!
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    functionName: String! @index
-    functionValue: BigInt
-    functionSuccess: Boolean @index
-    module: String!
 }
 

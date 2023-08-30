@@ -23,8 +23,6 @@ export const processor = new EvmBatchProcessor()
     .addLog({
         address: ['0xea0b609f81b3d7699a970e670ec471daf687e5c2'],
         topic0: [
-            contractAbi.events['ModuleDewhitelisted'].topic,
-            contractAbi.events['ModuleWhitelisted'].topic,
             contractAbi.events['RentalStarted'].topic,
             contractAbi.events['RentalStopped'].topic,
         ],
@@ -35,17 +33,8 @@ export const processor = new EvmBatchProcessor()
     .addTransaction({
         to: ['0xea0b609f81b3d7699a970e670ec471daf687e5c2'],
         sighash: [
-            contractAbi.functions['dewhitelistModule'].sighash,
-            contractAbi.functions['relayBatch'].sighash,
-            contractAbi.functions['relayBatchRentals'].sighash,
             contractAbi.functions['rentFromZone'].sighash,
-            contractAbi.functions['setRentalFactory'].sighash,
-            contractAbi.functions['setSigner'].sighash,
             contractAbi.functions['setZone'].sighash,
-            contractAbi.functions['stopRent'].sighash,
-            contractAbi.functions['stopRentBatch'].sighash,
-            contractAbi.functions['transferAdmin'].sighash,
-            contractAbi.functions['whitelistModule'].sighash,
         ],
         range: {
             from: 3923754,

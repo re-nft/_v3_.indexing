@@ -1,4 +1,22 @@
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/subsquid/squid-abi-template)
+# Readme
+
+Note that rental-manager.json abi (abi/rental-manager.json) is not a full abi.
+
+This is because squid will use everything defined on the abi to generate types and migrations.
+
+For that reason, when over-writing the existing abi, make sure you remove functions and events that we are no interested in indexing.
+
+To generate sepolia artifacts from the abi run:
+
+```bash
+sqd generate \
+--address "0xea0b609F81B3D7699a970e670ec471Daf687E5c2" \
+--archive "sepolia" \
+--event "*" \
+--function "*" \
+--from 3923754 \
+--abi "abi/rental-manager.json"
+```
 
 # Squid ABI template
 
