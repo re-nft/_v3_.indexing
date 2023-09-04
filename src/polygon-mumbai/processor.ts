@@ -8,50 +8,38 @@ import {
 import { lookupArchive } from "@subsquid/archive-registry";
 import * as rentalFactoryAbi from "../abi/rental-factory";
 import * as rentalManagerAbi from "../abi/rental-manager";
+import * as consts from "../consts";
 
 export const processor = new EvmBatchProcessor()
   .setDataSource({
     archive: lookupArchive("sepolia", { type: "EVM" }),
   })
-  .setFields({
-    log: {
-      topics: true,
-      data: true,
-      transactionHash: true,
-    },
-    transaction: {
-      hash: true,
-      input: true,
-      from: true,
-      value: true,
-      status: true,
-    },
-  })
+  .setFields(consts.FIELDS)
   .addLog({
-    address: ["0x2c2bba22aa19ba34bc5ba65e6c35ce54da36a33d"],
+    address: [consts.POLYGON_MUMBAI_RENTAL_FACTORY_ADDRESS],
     topic0: [rentalFactoryAbi.events.RentalSafeDeployment.topic],
     range: {
-      from: 3923754,
+      from: consts.POLYGON_MUMBAI_FROM_BLOCK,
     },
   })
   .addLog({
-    address: ["0xea0b609f81b3d7699a970e670ec471daf687e5c2"],
+    address: [consts.POLYGON_MUMBAI_RENTAL_MANAGER_ADDRESS],
     topic0: [
       rentalManagerAbi.events.RentalStarted.topic,
       rentalManagerAbi.events.RentalStopped.topic,
     ],
     range: {
-      from: 3923754,
+      from: consts.POLYGON_MUMBAI_FROM_BLOCK,
     },
   })
   .addTransaction({
-    to: ["0xea0b609f81b3d7699a970e670ec471daf687e5c2"],
+    to: [consts.POLYGON_MUMBAI_RENTAL_MANAGER_ADDRESS],
     sighash: [
       rentalManagerAbi.functions.rentFromZone.sighash,
       rentalManagerAbi.functions.setZone.sighash,
     ],
     range: {
-      from: 3923754,
+      from: consts.POLYGON_MUMBAI_FROM_BLOCK,
     },
   });
 
