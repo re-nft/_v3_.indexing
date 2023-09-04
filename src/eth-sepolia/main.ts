@@ -1,8 +1,8 @@
-import {rentalFactory, rentalManager} from './mapping'
+import {rentalFactory, rentalManager} from '../mapping'
 import {processor} from './processor'
-import {db, Store} from './db'
-import {EntityBuffer} from './entityBuffer'
-import {Block, Transaction} from './model'
+import {db, Store} from '../db'
+import {EntityBuffer} from '../entityBuffer'
+import {Block, Transaction} from '../model'
 
 processor.run(db, async (ctx) => {
     for (let block of ctx.blocks) {

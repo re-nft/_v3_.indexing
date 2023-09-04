@@ -3,7 +3,7 @@ import {Store} from '../db'
 import {EntityBuffer} from '../entityBuffer'
 import {RentalFactoryEventRentalSafeDeployment} from '../model'
 import * as spec from '../abi/rental-factory'
-import {Log, Transaction} from '../processor'
+import {Log} from '../processor'
 
 const address = '0x2c2bba22aa19ba34bc5ba65e6c35ce54da36a33d'
 
@@ -34,15 +34,5 @@ export function parseEvent(ctx: DataHandlerContext<Store>, log: Log) {
     }
     catch (error) {
         ctx.log.error({error, blockNumber: log.block.height, blockHash: log.block.hash, address}, `Unable to decode event "${log.topics[0]}"`)
-    }
-}
-
-export function parseFunction(ctx: DataHandlerContext<Store>, transaction: Transaction) {
-    try {
-        switch (transaction.input.slice(0, 10)) {
-        }
-    }
-    catch (error) {
-        ctx.log.error({error, blockNumber: transaction.block.height, blockHash: transaction.block.hash, address}, `Unable to decode function "${transaction.input.slice(0, 10)}"`)
     }
 }

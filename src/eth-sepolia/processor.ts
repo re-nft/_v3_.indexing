@@ -1,7 +1,7 @@
 import {EvmBatchProcessor, EvmBatchProcessorFields, BlockHeader, Log as _Log, Transaction as _Transaction} from '@subsquid/evm-processor'
 import {lookupArchive} from '@subsquid/archive-registry'
-import * as rentalFactoryAbi from './abi/rental-factory'
-import * as rentalManagerAbi from './abi/rental-manager'
+import * as rentalFactoryAbi from '../abi/rental-factory'
+import * as rentalManagerAbi from '../abi/rental-manager'
 
 export const processor = new EvmBatchProcessor()
     .setDataSource({

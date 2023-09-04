@@ -87,23 +87,6 @@ export function parseFunction(ctx: DataHandlerContext<Store>, transaction: Trans
                 )
                 break
             }
-            case spec.functions['setZone'].sighash: {
-                let f = spec.functions['setZone'].decode(transaction.input)
-                EntityBuffer.add(
-                    new RentalManagerFunctionSetZone({
-                        id: transaction.id,
-                        blockNumber: transaction.block.height,
-                        blockTimestamp: new Date(transaction.block.timestamp),
-                        transactionHash: transaction.hash,
-                        contract: transaction.to!,
-                        functionName: 'setZone',
-                        functionValue: transaction.value,
-                        functionSuccess: transaction.status != null ? Boolean(transaction.status) : undefined,
-                        newZone: f[0],
-                    })
-                )
-                break
-            }
         }
     }
     catch (error) {
