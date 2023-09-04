@@ -3,12 +3,14 @@ import { processor } from "./processor";
 import { db, Store } from "../db";
 import { EntityBuffer } from "../entityBuffer";
 import { Block, Transaction } from "../model";
+import * as consts from "../consts";
 
 processor.run(db, async (ctx) => {
   for (const block of ctx.blocks) {
     EntityBuffer.add(
       new Block({
         id: block.header.id,
+        network: consts.NETWORK.ETH_SEPOLIA,
         number: block.header.height,
         timestamp: new Date(block.header.timestamp),
       }),
@@ -37,6 +39,7 @@ processor.run(db, async (ctx) => {
       EntityBuffer.add(
         new Transaction({
           id: transaction.id,
+          network: consts.NETWORK.ETH_SEPOLIA,
           blockNumber: block.header.height,
           blockTimestamp: new Date(block.header.timestamp),
           hash: transaction.hash,

@@ -17,6 +17,7 @@ import { type Log, type Transaction } from "../eth-sepolia/processor";
 // TODO: or add network to context
 const address = "0xea0b609f81b3d7699a970e670ec471daf687e5c2";
 
+// TODO: network on `RentalManager[...]` depending on ctx or arg passed
 export function parseEvent(ctx: DataHandlerContext<Store>, log: Log) {
   try {
     switch (log.topics[0]) {
@@ -75,6 +76,7 @@ export function parseEvent(ctx: DataHandlerContext<Store>, log: Log) {
   }
 }
 
+// TODO: network on `RentalManager[...]` depending on ctx or arg passed
 export function parseFunction(
   ctx: DataHandlerContext<Store>,
   transaction: Transaction,

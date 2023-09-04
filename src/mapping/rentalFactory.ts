@@ -11,6 +11,7 @@ import { type Log } from "../eth-sepolia/processor";
 // TODO: or add network to context
 const address = "0x2c2bba22aa19ba34bc5ba65e6c35ce54da36a33d";
 
+// TODO: network on `RentalFactoryEventRentalSafeDeployment` depending on ctx or arg passed
 export function parseEvent(ctx: DataHandlerContext<Store>, log: Log) {
   try {
     switch (log.topics[0]) {
