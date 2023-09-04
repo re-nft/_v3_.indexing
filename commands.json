@@ -34,11 +34,11 @@
       "migration:generate": {
         "description": "Generate a DB migration matching the TypeORM entities",
         "deps": ["build", "migration:clean"],
-        "cmd": ["squid-typeorm-migration", "generate"],
+        "cmd": ["squid-typeorm-migration", "generate"]
       },
       "migration:clean": {
         "description": "Clean the migrations folder",
-        "cmd": ["npx", "--yes", "rimraf", "./db/migrations"],
+        "cmd": ["npx", "--yes", "rimraf", "./db/migrations"]
       },
       "migration": {
         "deps": ["build"],
@@ -53,15 +53,26 @@
         "description": "Generate data access classes for an ABI file(s) in the ./abi folder",
         "cmd": ["squid-evm-typegen", "./src/abi", {"glob": "./abi/*.json"}, "--multicall"]
       },
-      "process": {
-        "description": "Load .env and start the squid processor",
+      "process:eth-sepolia": {
+        "description": "Load .env and start the ETH-SEPOLIA squid processor",
         "deps": ["build", "migration:apply"],
-        "cmd": ["node", "--require=dotenv/config", "lib/main.js"]
+        "cmd": ["node", "--require=dotenv/config", "lib/eth-sepolia/src/main.js"]
       },
-      "process:prod": {
+      "process:prod:eth-sepolia": {
         "description": "Start the squid processor",
         "deps": ["migration:apply"],
-        "cmd": ["node", "lib/main.js"],
+        "cmd": ["node", "lib/eth-sepolia/src/main.js"],
+        "hidden": true
+      },
+      "process:polygon-mumbai": {
+        "description": "Load .env and start the ETH-SEPOLIA squid processor",
+        "deps": ["build", "migration:apply"],
+        "cmd": ["node", "--require=dotenv/config", "lib/polygon-mumbai/src/main.js"]
+      },
+      "process:prod:polygon-mumbai": {
+        "description": "Start the squid processor",
+        "deps": ["migration:apply"],
+        "cmd": ["node", "lib/polygon-mumbai/src/main.js"],
         "hidden": true
       },
       "serve": {

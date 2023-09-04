@@ -6,14 +6,7 @@ import * as rentalManagerAbi from './abi/rental-manager'
 export const processor = new EvmBatchProcessor()
     .setDataSource({
         archive: lookupArchive('sepolia', {type: 'EVM'}),
-        chain: process.env.RPC_ETH_SEPOLIA_HTTP,
     })
-    // I went through forked blocks here: https://sepolia.etherscan.io/blocks_forked?p=1
-    // and I could only find one case where re-org depth exceeded 5 blocks: 22 blocks
-    // if re-org happens, I am not sure about this, because squid is supposed to handle
-    // automatically, but if error happens, all we would have to do is re-run / re-deploy
-    // the squid. So re-deploying once a year (for sepolia) is fine.
-    .setFinalityConfirmation(6)
     .setFields({
             log: {
                 topics: true,

@@ -8,9 +8,9 @@ deploy:
     postgres: 
   processor:
     - name: eth-sepolia-processor
-      cmd: [ "node", "lib/eth-sepolia/main" ]
+      cmd: [ "node", "lib/eth-sepolia/src/main" ]
     - name: polygon-mumbai-processor
-      cmd: [ "node", "lib/polygon-mumbai/main" ]
+      cmd: [ "node", "lib/polygon-mumbai/src/main" ]
   api:
     cmd:
       - npx

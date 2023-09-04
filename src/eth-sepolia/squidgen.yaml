@@ -4,14 +4,14 @@ target:
 contracts:
   - name: rental-factory
     address: "0x2c2BBA22aA19Ba34bC5BA65e6c35Ce54DA36A33D"
-    abi: ./abi/rental-factory.json
+    abi: ../../abi/rental-factory.json
     range:
       from: 3923754
     events:
       - RentalSafeDeployment
   - name: rental-manager
     address: "0xea0b609F81B3D7699a970e670ec471Daf687E5c2"
-    abi: ./abi/rental-manager.json
+    abi: ../../abi/rental-manager.json
     range:
       from: 3923754
     events:
