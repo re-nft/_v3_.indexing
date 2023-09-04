@@ -3,8 +3,12 @@ import { type Store } from "../db";
 import { EntityBuffer } from "../entityBuffer";
 import { RentalFactoryEventRentalSafeDeployment } from "../model";
 import * as spec from "../abi/rental-factory";
-import { type Log } from "../processor";
+// ! both eth-sepolia and polygon-mumbai are identical
+// ! therefore it is OK to do this
+import { type Log } from "../eth-sepolia/processor";
 
+// TODO: this address depends on the network, might want to add another arg on this function
+// TODO: or add network to context
 const address = "0x2c2bba22aa19ba34bc5ba65e6c35ce54da36a33d";
 
 export function parseEvent(ctx: DataHandlerContext<Store>, log: Log) {

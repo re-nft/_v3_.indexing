@@ -6,11 +6,15 @@ import {
   RentalManagerEventRentalStarted,
   RentalManagerEventRentalStopped,
   RentalManagerFunctionRentFromZone,
-  RentalManagerFunctionSetZone,
+//   RentalManagerFunctionSetZone,
 } from "../model";
 import * as spec from "../abi/rental-manager";
-import { type Log, type Transaction } from "../processor";
+// ! both eth-sepolia and polygon-mumbai are identical
+// ! therefore it is OK to do this
+import { type Log, type Transaction } from "../eth-sepolia/processor";
 
+// TODO: this address depends on the network, might want to add another arg on this function
+// TODO: or add network to context
 const address = "0xea0b609f81b3d7699a970e670ec471daf687e5c2";
 
 export function parseEvent(ctx: DataHandlerContext<Store>, log: Log) {

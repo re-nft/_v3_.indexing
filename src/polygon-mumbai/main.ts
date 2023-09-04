@@ -24,9 +24,9 @@ processor.run(db, async (ctx) => {
     }
 
     for (const transaction of block.transactions) {
-      if (transaction.to === "0x2c2bba22aa19ba34bc5ba65e6c35ce54da36a33d") {
-        rentalFactory.parseFunction(ctx, transaction);
-      }
+    //   if (transaction.to === "0x2c2bba22aa19ba34bc5ba65e6c35ce54da36a33d") {
+    //     rentalFactory.parseFunction(ctx, transaction);
+    //   }
       if (transaction.to === "0xea0b609f81b3d7699a970e670ec471daf687e5c2") {
         rentalManager.parseFunction(ctx, transaction);
       }
