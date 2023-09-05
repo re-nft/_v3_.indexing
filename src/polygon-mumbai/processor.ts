@@ -36,7 +36,7 @@ export const processor = new EvmBatchProcessor()
     to: [consts.POLYGON_MUMBAI_RENTAL_MANAGER_ADDRESS],
     sighash: [
       rentalManagerAbi.functions.rentFromZone.sighash,
-      rentalManagerAbi.functions.setZone.sighash,
+      // rentalManagerAbi.functions.setZone.sighash,
     ],
     range: {
       from: consts.POLYGON_MUMBAI_FROM_BLOCK,

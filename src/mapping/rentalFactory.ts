@@ -36,6 +36,7 @@ export function parseEvent(
         break;
       }
     }
+    // TODO: worth logging network too
   } catch (error) {
     ctx.log.error(
       {

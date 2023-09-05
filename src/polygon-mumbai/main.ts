@@ -18,17 +18,21 @@ processor.run(db, async (ctx) => {
     );
 
     for (const log of block.logs) {
-      if (log.address === "0x2c2bba22aa19ba34bc5ba65e6c35ce54da36a33d") {
-        rentalFactory.parseEvent(ctx, log);
+      if (log.address === consts.POLYGON_MUMBAI_RENTAL_FACTORY_ADDRESS) {
+        rentalFactory.parseEvent(ctx, log, consts.NETWORK.POLYGON_MUMBAI);
       }
-      if (log.address === "0xea0b609f81b3d7699a970e670ec471daf687e5c2") {
-        rentalManager.parseEvent(ctx, log);
+      if (log.address === consts.POLYGON_MUMBAI_RENTAL_MANAGER_ADDRESS) {
+        rentalManager.parseEvent(ctx, log, consts.NETWORK.POLYGON_MUMBAI);
       }
     }
 
     for (const transaction of block.transactions) {
-      if (transaction.to === "0xea0b609f81b3d7699a970e670ec471daf687e5c2") {
-        rentalManager.parseFunction(ctx, transaction);
+      if (transaction.to === consts.POLYGON_MUMBAI_RENTAL_MANAGER_ADDRESS) {
+        rentalManager.parseFunction(
+          ctx,
+          transaction,
+          consts.NETWORK.POLYGON_MUMBAI,
+        );
       }
 
       EntityBuffer.add(

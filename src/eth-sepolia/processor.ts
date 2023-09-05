@@ -36,7 +36,7 @@ export const processor = new EvmBatchProcessor()
     to: [consts.ETH_SEPOLIA_RENTAL_MANAGER_ADDRESS],
     sighash: [
       rentalManagerAbi.functions.rentFromZone.sighash,
-      rentalManagerAbi.functions.setZone.sighash,
+      // rentalManagerAbi.functions.setZone.sighash,
     ],
     range: {
       from: consts.ETH_SEPOLIA_FROM_BLOCK,
