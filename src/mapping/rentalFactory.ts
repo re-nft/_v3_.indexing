@@ -6,15 +6,13 @@ import * as spec from "../abi/rental-factory";
 // ! both eth-sepolia and polygon-mumbai are identical
 // ! therefore it is OK to do this
 import { type Log } from "../eth-sepolia/processor";
+import * as consts from "../consts";
 
-// TODO: this address depends on the network, might want to add another
-// arg on this function
-// TODO: or add network to context
-const address = "0x2c2bba22aa19ba34bc5ba65e6c35ce54da36a33d";
-
-// TODO: network on `RentalFactoryEventRentalSafeDeployment` depending
-// on ctx or arg passed
-export function parseEvent(ctx: DataHandlerContext<Store>, log: Log): void {
+export function parseEvent(
+  ctx: DataHandlerContext<Store>,
+  log: Log,
+  chain: consts.NETWORK,
+): void {
   try {
     switch (log.topics[0]) {
       case spec.events.RentalSafeDeployment.topic: {
@@ -22,6 +20,7 @@ export function parseEvent(ctx: DataHandlerContext<Store>, log: Log): void {
         EntityBuffer.add(
           new RentalFactoryEventRentalSafeDeployment({
             id: log.id,
+            network: chain,
             blockNumber: log.block.height,
             blockTimestamp: new Date(log.block.timestamp),
             transactionHash: log.transactionHash,
@@ -43,7 +42,7 @@ export function parseEvent(ctx: DataHandlerContext<Store>, log: Log): void {
         error,
         blockNumber: log.block.height,
         blockHash: log.block.hash,
-        address,
+        address: consts.CONTRACT_ADDRESS[chain][consts.CONTRACT.RENTAL_FACTORY],
       },
       `Unable to decode event "${log.topics[0]}"`,
     );

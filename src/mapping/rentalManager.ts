@@ -12,14 +12,13 @@ import * as spec from "../abi/rental-manager";
 // ! both eth-sepolia and polygon-mumbai are identical
 // ! therefore it is OK to do this
 import { type Log, type Transaction } from "../eth-sepolia/processor";
+import * as consts from "../consts";
 
-// TODO: this address depends on the network, might want to add another
-// arg on this function
-// TODO: or add network to context
-const address = "0xea0b609f81b3d7699a970e670ec471daf687e5c2";
-
-// TODO: network on `RentalManager[...]` depending on ctx or arg passed
-export function parseEvent(ctx: DataHandlerContext<Store>, log: Log): void {
+export function parseEvent(
+  ctx: DataHandlerContext<Store>,
+  log: Log,
+  chain: consts.NETWORK,
+): void {
   try {
     switch (log.topics[0]) {
       case spec.events.RentalStarted.topic: {
@@ -27,6 +26,7 @@ export function parseEvent(ctx: DataHandlerContext<Store>, log: Log): void {
         EntityBuffer.add(
           new RentalManagerEventRentalStarted({
             id: log.id,
+            network: chain,
             blockNumber: log.block.height,
             blockTimestamp: new Date(log.block.timestamp),
             transactionHash: log.transactionHash,
@@ -48,6 +48,7 @@ export function parseEvent(ctx: DataHandlerContext<Store>, log: Log): void {
         EntityBuffer.add(
           new RentalManagerEventRentalStopped({
             id: log.id,
+            network: chain,
             blockNumber: log.block.height,
             blockTimestamp: new Date(log.block.timestamp),
             transactionHash: log.transactionHash,
@@ -70,17 +71,17 @@ export function parseEvent(ctx: DataHandlerContext<Store>, log: Log): void {
         error,
         blockNumber: log.block.height,
         blockHash: log.block.hash,
-        address,
+        address: consts.CONTRACT_ADDRESS[chain][consts.CONTRACT.RENTAL_MANAGER],
       },
       `Unable to decode event "${log.topics[0]}"`,
     );
   }
 }
 
-// TODO: network on `RentalManager[...]` depending on ctx or arg passed
 export function parseFunction(
   ctx: DataHandlerContext<Store>,
   transaction: Transaction,
+  chain: consts.NETWORK,
 ): void {
   try {
     switch (transaction.input.slice(0, 10)) {
@@ -89,6 +90,7 @@ export function parseFunction(
         EntityBuffer.add(
           new RentalManagerFunctionRentFromZone({
             id: transaction.id,
+            network: chain,
             blockNumber: transaction.block.height,
             blockTimestamp: new Date(transaction.block.timestamp),
             transactionHash: transaction.hash,
@@ -119,7 +121,7 @@ export function parseFunction(
         error,
         blockNumber: transaction.block.height,
         blockHash: transaction.block.hash,
-        address,
+        address: consts.CONTRACT_ADDRESS[chain][consts.CONTRACT.RENTAL_MANAGER],
       },
       `Unable to decode function "${transaction.input.slice(0, 10)}"`,
     );
