@@ -1,9 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class EntityBuffer {
   private static buffer: Record<string, Entity[]> = {};
 
   private constructor() {}
 
-  static add<E extends Entity>(e: E) {
+  static add<E extends Entity>(e: E): void {
     let b = this.buffer[e.constructor.name];
     if (b == null) {
       b = this.buffer[e.constructor.name] = [];
@@ -11,7 +12,7 @@ export class EntityBuffer {
     b.push(e);
   }
 
-  static flush() {
+  static flush(): Entity[][] {
     const values = Object.values(this.buffer);
     this.buffer = {};
     return values;
