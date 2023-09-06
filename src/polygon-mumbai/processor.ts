@@ -12,8 +12,10 @@ import * as consts from "../consts";
 
 export const processor = new EvmBatchProcessor()
   .setDataSource({
-    archive: lookupArchive("sepolia", { type: "EVM" }),
+    archive: lookupArchive("polygon-mumbai", { type: "EVM" }),
+    chain: process.env.RPC_POLYGON_TESTNET_HTTP,
   })
+  .setFinalityConfirmation(50)
   .setFields(consts.FIELDS)
   .addLog({
     address: [consts.POLYGON_MUMBAI_RENTAL_FACTORY_ADDRESS],
