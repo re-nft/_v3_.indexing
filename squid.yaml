@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: renft-v3
-version: 1
+version: 2
 description: "A squid that indexes renft v3 on sepolia and mumbai"
 build:
 deploy:
