@@ -1,4 +1,4 @@
-import {Store as Store_, TypeormDatabase} from '@subsquid/typeorm-store'
+import { type Store as Store_, TypeormDatabase } from "@subsquid/typeorm-store";
 
-export let db = new TypeormDatabase()
-export type Store = Store_
+export const db = new TypeormDatabase();
+export type Store = Store_;

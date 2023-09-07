@@ -1,11 +1,13 @@
 type Block @entity {
     id: ID!
+    network: String! @index
     number: Int! @index
     timestamp: DateTime! @index
 }
 
 type Transaction @entity {
     id: ID!
+    network: String! @index
     blockNumber: Int @index
     blockTimestamp: DateTime! @index
     hash: String! @index
@@ -16,6 +18,7 @@ type Transaction @entity {
 
 type RentalFactoryEventRentalSafeDeployment @entity {
     id: ID!
+    network: String! @index
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
     transactionHash: String! @index
@@ -30,6 +33,7 @@ type RentalFactoryEventRentalSafeDeployment @entity {
 
 type RentalManagerEventRentalStarted @entity {
     id: ID!
+    network: String! @index
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
     transactionHash: String! @index
@@ -46,6 +50,7 @@ type RentalManagerEventRentalStarted @entity {
 
 type RentalManagerEventRentalStopped @entity {
     id: ID!
+    network: String! @index
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
     transactionHash: String! @index
@@ -61,6 +66,7 @@ type RentalManagerEventRentalStopped @entity {
 
 type RentalManagerFunctionRentFromZone @entity {
     id: ID!
+    network: String! @index
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
     transactionHash: String! @index
@@ -80,6 +86,7 @@ type RentalManagerFunctionRentFromZone @entity {
 
 type RentalManagerFunctionSetZone @entity {
     id: ID!
+    network: String! @index
     blockNumber: Int! @index
     blockTimestamp: DateTime! @index
     transactionHash: String! @index

@@ -11,6 +11,10 @@ export class RentalManagerEventRentalStopped {
     id!: string
 
     @Index_()
+    @Column_("text", {nullable: false})
+    network!: string
+
+    @Index_()
     @Column_("int4", {nullable: false})
     blockNumber!: number
 

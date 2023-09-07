@@ -1,98 +1,49 @@
-# Readme
+# reNFT v3 Indexing - Subsquid
 
 Squid is generated from `squidgen.yaml`. Reason we are using yaml file instead of using `squidgen` is because our source of truth
-is more than one contract. And the only way to index more than one contract at the same time and have all artifacts generated,
-you must use squidgen.yaml config file: https://docs.subsquid.io/basics/squid-gen/#configuration
+is more than one contract, see [this](https://docs.subsquid.io/basics/squid-gen/#configuration).
 
-Therefore, **ignore everything below**. Keeping it for reference for now. Eventually will remove it.
+Once it's generated there is some manual work to be done, however. You cannot use the generated code out of the box.
 
-# Squid ABI template
+## Development
 
-An experimental template is used to generate a squid that indexes EVM logs and transactions of choice from a contract address. Supports automatic ABI lookups for public contracts using the Etherscan API
+To spin up a docker db:
 
-## Usage
+`sqd up`
 
-0. Install the [Squid CLI](https://docs.subsquid.io/squid-cli/):
+If you need to generate a new migrations script, because you have made changes to `schema.graphql`, run:
 
-```sh
-npm i -g @subsquid/cli
-```
+`sqd migrations:generate`
 
-1. Init the template and install the dependencies
+You can learn about all the commands at your disposal in `commands.json`
 
-```bash
-sqd init my-abi-squid --template https://github.com/subsquid/squid-abi-template
-cd my-abi-squid
-npm i
-```
+To connect to the database and explore the data you can use various clients, for example:
 
-2. Run `sqd generate` with the appropriate flags.
+- DBeaver
+- DBVisualiser
 
-```bash
-Usage: sqd generate [options]
+Here is the default data you'd need to use to connect to the db:
 
-Options:
-  --address <contract>      contract address
-  --archive <url>           archive endpoint 
-  --abi <path>              (Optional) path or URL to the abi file. If omitted, the Etherscan API is used.
-  -e, --event <name...>     one or multiple events to be indexed. '*' will index all events
-  -f, --function <name...>. one or multiple contract functions to be indexed. '*' will index all functions
-  --from <block>            start indexing from the given block. 
-  --etherscan-api <url>     (Optional) an Etherscan-compatible API to fetch contract ABI by a known address. Default: https://api.etherscan.io/
-```
+## Deploying to Aquarium
 
-3. Build and run the squid
+I had issues when both v1 and v2 were syncing at the same time. API endpoint wouldn't be available.
 
-```bash
-sqd build
-sqd up
-sqd migration:generate
-sqd process
-```
-The indexing will start.
+To remedy, I had to hibernate v1 and restart v2.
 
-In a separate window, start the GraphQL API server at `localhost:4350/graphql`:
-```bash
-sqd serve
-```
+![squid db config](./assets/squid-db.png)
 
-4. Inspect `schema.graphql`, `src/processor.ts` and start hacking!
+Password is `postgres`
 
-For more details on how to build and deploy a squid, see the [docs](https://docs.subsquid.io).
+---
 
-## Example
-### Generate
-```bash
-npx squid-gen-abi \
---address 0x2E645469f354BB4F5c8a05B3b30A929361cf77eC \
---archive https://eth.archive.subsquid.io \
---event NewGravatar \
---event UpdatedGravatar \
---function createGravatar \
---from 6000000
-```
-### Explore
-```gql
-query MyQuery {
-  events(orderBy: block_timestamp_ASC) {
-    id
-    name
-    block {
-      number
-      timestamp
-    }
-    ... on NewGravatarEvent {
-      id0
-      imageUrl
-      owner
-    }
-    ... on UpdatedGravatarEvent {
-      id0
-      imageUrl
-      owner
-    }
-  }
-}
-```
-<img width="1000" alt="Example" src="https://user-images.githubusercontent.com/61732514/214889375-20cd1945-0124-4924-a1dd-3f1a07ddd6ab.png">
+To start sepolia indexing run:
 
+`sqd process:eth-sepolia`
+
+## Optimisations
+
+Right now, the data goes into aquarium hosted db. Then, api will pull that data by making post requests to the squid graphql server.
+
+If we are seeing slow responses, then we can save indexed data straight into the same db as the api.
+
+This wasn't done originally because of migrations. Subsquid has its own migrations and our api does too. To avoid potential conflicts, it was decided to keep the dbs separate to begin with.

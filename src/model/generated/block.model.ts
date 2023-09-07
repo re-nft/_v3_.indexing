@@ -10,6 +10,10 @@ export class Block {
     id!: string
 
     @Index_()
+    @Column_("text", {nullable: false})
+    network!: string
+
+    @Index_()
     @Column_("int4", {nullable: false})
     number!: number
 

@@ -1,26 +1,25 @@
 manifestVersion: subsquid.io/v0.1
 name: renft-v3
 version: 1
-description: A squid indexer generated from an ABI template
-build: 
+description: "A squid that indexes renft v3 on sepolia and mumbai"
+build:
 deploy:
   addons:
-    postgres: 
-    rpc:
-      - eth-sepolia:http
+    postgres:
   processor:
-    cmd:
-      - node
-      - lib/main
+    - name: eth-sepolia-processor
+      cmd: ["node", "lib/eth-sepolia/main"]
+    - name: polygon-mumbai-processor
+      cmd: ["node", "lib/polygon-mumbai/main"]
   api:
     cmd:
       - npx
       - squid-graphql-server
-      - '--dumb-cache'
+      - "--dumb-cache"
       - in-memory
-      - '--dumb-cache-ttl'
-      - '1000'
-      - '--dumb-cache-size'
-      - '100'
-      - '--dumb-cache-max-age'
-      - '1000'
+      - "--dumb-cache-ttl"
+      - "1000"
+      - "--dumb-cache-size"
+      - "100"
+      - "--dumb-cache-max-age"
+      - "1000"
