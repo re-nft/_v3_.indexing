@@ -24,6 +24,12 @@ To connect to the database and explore the data you can use various clients, for
 
 Here is the default data you'd need to use to connect to the db:
 
+## Deploying to Aquarium
+
+I had issues when both v1 and v2 were syncing at the same time. API endpoint wouldn't be available.
+
+To remedy, I had to hibernate v1 and restart v2.
+
 ![squid db config](./assets/squid-db.png)
 
 Password is `postgres`
