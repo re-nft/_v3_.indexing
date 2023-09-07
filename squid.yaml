@@ -23,3 +23,16 @@ deploy:
       - "100"
       - "--dumb-cache-max-age"
       - "1000"
+
+scale:
+  dedicated: true
+  addons:
+    postgres:
+      storage: 5G
+      profile: medium
+  processor:
+    profile: medium
+  api:
+    profile: large
+    # load-balance three replicas
+    replicas: 3
