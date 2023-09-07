@@ -23,17 +23,19 @@ export enum CONTRACT {
   RENTAL_FACTORY,
 }
 
+// ! super critical to lower case the addresses, otherwise
+// ! it won't index
 export const ETH_SEPOLIA_FROM_BLOCK = 3923754;
 export const ETH_SEPOLIA_RENTAL_FACTORY_ADDRESS =
-  "0x2c2bba22aa19ba34bc5ba65e6c35ce54da36a33d";
+  "0x2c2bba22aa19ba34bc5ba65e6c35ce54da36a33d".toLowerCase();
 export const ETH_SEPOLIA_RENTAL_MANAGER_ADDRESS =
-  "0xea0b609f81b3d7699a970e670ec471daf687e5c2";
+  "0xea0b609f81b3d7699a970e670ec471daf687e5c2".toLowerCase();
 
 export const POLYGON_MUMBAI_FROM_BLOCK = 39817388;
 export const POLYGON_MUMBAI_RENTAL_FACTORY_ADDRESS =
-  "0x9D2068f09D908330cE24887ab3113Ce037EFF26f";
+  "0x9D2068f09D908330cE24887ab3113Ce037EFF26f".toLowerCase();
 export const POLYGON_MUMBAI_RENTAL_MANAGER_ADDRESS =
-  "0x7A21CFf58c14FA9c46656dBAa7aA5C569e67f83A";
+  "0x7A21CFf58c14FA9c46656dBAa7aA5C569e67f83A".toLowerCase();
 
 export const CONTRACT_ADDRESS = {
   [NETWORK.ETH_SEPOLIA]: {
