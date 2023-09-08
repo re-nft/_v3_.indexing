@@ -6,6 +6,9 @@ build:
 deploy:
   addons:
     postgres:
+    rpc:
+      - eth-sepolia:http
+      - polygon-testnet:http
   processor:
     - name: eth-sepolia-processor
       cmd: ["node", "lib/eth-sepolia/main"]
