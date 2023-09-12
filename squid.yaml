@@ -14,28 +14,8 @@ deploy:
       cmd: ["node", "lib/eth-sepolia/main"]
     - name: polygon-mumbai-processor
       cmd: ["node", "lib/polygon-mumbai/main"]
-  api:
-    cmd:
-      - npx
-      - squid-graphql-server
-      - "--dumb-cache"
-      - in-memory
-      - "--dumb-cache-ttl"
-      - "1000"
-      - "--dumb-cache-size"
-      - "100"
-      - "--dumb-cache-max-age"
-      - "1000"
 
 scale:
   dedicated: true
-  addons:
-    postgres:
-      storage: 100G
-      profile: medium
   processor:
     profile: medium
-  api:
-    profile: large
-    # load-balance three replicas
-    replicas: 3

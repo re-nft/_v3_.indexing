@@ -5,11 +5,6 @@ import { EntityBuffer } from "../entityBuffer";
 import { Block, Transaction } from "../model";
 import * as consts from "../consts";
 
-// ! can't find what supportHotBlocks does in docs,
-// ! but all subsquid repos set it to true
-// ! whereas multichain example that we care about sets it to false
-// eslint-disable-next-line max-len
-// ! https://github.com/subsquid-labs/multichain-transfers-example/blob/master/src/bsc/main.ts#L6C57-L6C57
 processor.run(
   new TypeormDatabase({
     supportHotBlocks: true,
