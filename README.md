@@ -25,6 +25,16 @@ To connect to the database and explore the data you can use various clients, for
 
 Here is the default data you'd need to use to connect to the db:
 
+---
+
+To have subsquid write to your own database, utilise the following environment variables:
+
+- `DB_HOST`
+- `DB_PORT`
+- `DB_NAME`
+- `DB_USER`
+- `PGSSLMODE=true`
+
 ## Deploying to Aquarium
 
 I had issues when both v1 and v2 were syncing at the same time. API endpoint wouldn't be available.
