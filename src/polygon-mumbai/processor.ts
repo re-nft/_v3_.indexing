@@ -33,16 +33,6 @@ export const processor = new EvmBatchProcessor()
     range: {
       from: consts.POLYGON_MUMBAI_FROM_BLOCK,
     },
-  })
-  .addTransaction({
-    to: [consts.POLYGON_MUMBAI_RENTAL_MANAGER_ADDRESS],
-    sighash: [
-      rentalManagerAbi.functions.rentFromZone.sighash,
-      // rentalManagerAbi.functions.setZone.sighash,
-    ],
-    range: {
-      from: consts.POLYGON_MUMBAI_FROM_BLOCK,
-    },
   });
 
 export type Fields = EvmBatchProcessorFields<typeof processor>;
