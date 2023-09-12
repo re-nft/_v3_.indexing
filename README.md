@@ -19,8 +19,9 @@ You can learn about all the commands at your disposal in `commands.json`
 
 To connect to the database and explore the data you can use various clients, for example:
 
-- DBeaver
-- DBVisualiser
+- pgAdmin (if you will just use it for PostgreSQL)
+- DBeaver (if you will use it for multiple databases)
+- DBVisualiser (if you will use it for multiple databases)
 
 Here is the default data you'd need to use to connect to the db:
 
@@ -47,3 +48,5 @@ Right now, the data goes into aquarium hosted db. Then, api will pull that data 
 If we are seeing slow responses, then we can save indexed data straight into the same db as the api.
 
 This wasn't done originally because of migrations. Subsquid has its own migrations and our api does too. To avoid potential conflicts, it was decided to keep the dbs separate to begin with.
+
+It is possible to index transactions with subsquid but they are more costly in terms of RPC calls, which is OK, if we need to do it. However, there is no point in double indexing the same data with transactions and logs at the same time.
