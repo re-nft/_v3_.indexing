@@ -1,41 +1,24 @@
 manifestVersion: subsquid.io/v0.1
 name: renft-v3
-version: 2
+version: 3
 description: "A squid that indexes renft v3 on sepolia and mumbai"
 build:
 deploy:
   addons:
-    postgres:
     rpc:
       - eth-sepolia:http
       - polygon-testnet:http
+  secrets: ["V3_DB_NAME", "V3_DB_HOST", "V3_DB_USER", "V3_DB_PASS", "PGSSLMODE"]
+  migrate:
+    cmd: ["echo"]
+
   processor:
     - name: eth-sepolia-processor
       cmd: ["node", "lib/eth-sepolia/main"]
     - name: polygon-mumbai-processor
       cmd: ["node", "lib/polygon-mumbai/main"]
-  api:
-    cmd:
-      - npx
-      - squid-graphql-server
-      - "--dumb-cache"
-      - in-memory
-      - "--dumb-cache-ttl"
-      - "1000"
-      - "--dumb-cache-size"
-      - "100"
-      - "--dumb-cache-max-age"
-      - "1000"
 
 scale:
   dedicated: true
-  addons:
-    postgres:
-      storage: 100G
-      profile: medium
   processor:
     profile: medium
-  api:
-    profile: large
-    # load-balance three replicas
-    replicas: 3

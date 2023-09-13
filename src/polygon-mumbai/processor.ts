@@ -10,6 +10,14 @@ import * as rentalFactoryAbi from "../abi/rental-factory";
 import * as rentalManagerAbi from "../abi/rental-manager";
 import * as consts from "../consts";
 
+// ! there is no clean way to do this
+// ! this is squid's team recommendation
+process.env.DB_NAME = process.env.V3_DB_NAME;
+process.env.DB_HOST = process.env.V3_DB_HOST;
+process.env.DB_PORT = process.env.V3_DB_PORT;
+process.env.DB_USER = process.env.V3_DB_USER;
+process.env.DB_PASS = process.env.V3_DB_PASS;
+
 export const processor = new EvmBatchProcessor()
   .setDataSource({
     archive: lookupArchive("polygon-mumbai", { type: "EVM" }),
@@ -29,16 +37,6 @@ export const processor = new EvmBatchProcessor()
     topic0: [
       rentalManagerAbi.events.RentalStarted.topic,
       rentalManagerAbi.events.RentalStopped.topic,
-    ],
-    range: {
-      from: consts.POLYGON_MUMBAI_FROM_BLOCK,
-    },
-  })
-  .addTransaction({
-    to: [consts.POLYGON_MUMBAI_RENTAL_MANAGER_ADDRESS],
-    sighash: [
-      rentalManagerAbi.functions.rentFromZone.sighash,
-      // rentalManagerAbi.functions.setZone.sighash,
     ],
     range: {
       from: consts.POLYGON_MUMBAI_FROM_BLOCK,
