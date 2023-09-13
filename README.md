@@ -65,7 +65,7 @@ To have subsquid write to your own database locally, utilise the following envir
 - `V3_DB_USER`
 - `PGSSLMODE=true` (you only need this if you are writing to externally hosted db from local terminal)
 
-To have hosted aquarium service pick up our external db, we need to re-define `DB_HOST`, `DB_PORT`, `DB_NAME` and `DB_USER` to point to the above. That is what you see before processors gets initilised in this codebase.
+To have hosted aquarium service pick up our external db, we need to re-define `DB_HOST`, `DB_PORT`, `DB_NAME` and `DB_USER` to point to the above. That is what you see before processors gets initialised in this codebase.
 
 ## Optimisations
 
