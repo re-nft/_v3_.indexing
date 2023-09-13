@@ -42,13 +42,15 @@ To start mumbai indexing run:
 
 ---
 
-To have subsquid write to your own database, utilise the following environment variables:
+To have subsquid write to your own database locally, utilise the following environment variables:
 
 - `DB_HOST`
 - `DB_PORT`
 - `DB_NAME`
 - `DB_USER`
 - `PGSSLMODE=true`
+
+To have the above also persist in Aquarium, you need to re-define these before the processor gets initiliased.
 
 ## Optimisations
 
@@ -66,4 +68,6 @@ Right now, we are writing everything into the `main` branch of neondb.
 
 Non-prod indexing should be done in feature branches, instead.
 
-Consider if writing indexed data into non-public schema is a better approach. I couldn't find how to do it with subsquid, though.
+Writing data to non-"public" schema would be useful, that way we do not run risk of having api read or write from the wrong schema.
+
+What schema to write to depends on the user. So creating a user with requisite settings, will ensure you are writing to the right schema. However, if you are using a hosted db that doesn't allow you to tinker with those settings, then there is no way to write to a schema other than "public". This is one of the drawbacks of having squid write to your own db. If you can control what schemas your other services write to, then it's better to adjust settings there and squid will keep writing to "public" schema.
