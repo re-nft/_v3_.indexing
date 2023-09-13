@@ -5,7 +5,6 @@ description: "A squid that indexes renft v3 on sepolia and mumbai"
 build:
 deploy:
   addons:
-    postgres:
     rpc:
       - eth-sepolia:http
       - polygon-testnet:http
