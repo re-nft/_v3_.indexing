@@ -16,7 +16,7 @@ Note, that by default, it will generate indices for all the columns on the table
 
 ---
 
-Right now it's quite hacky (squid lib limitation) to run the migrations when you are using external db.
+Right now it's quite hacky to run the migrations when you are using external db.
 
 We have switched off squid from running migrations itself (you cannot set `DB_NAME`, `DB_USER`, etc. meaningfully when deploying to aquarium). Therefore, it is your responsibility, to manually run migrations before you deploy. To do so, set correctly (**notice there is no `V3_` prefix!**):
 
