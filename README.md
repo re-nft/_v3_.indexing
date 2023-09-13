@@ -67,15 +67,6 @@ To have subsquid write to your own database locally, utilise the following envir
 
 To have hosted aquarium service pick up our external db, we need to re-define `DB_HOST`, `DB_PORT`, `DB_NAME` and `DB_USER` to point to the above. That is what you see before processors gets initialised in this codebase.
 
-## Optimisations
-
-Right now, the data goes into aquarium hosted db. Then, api will pull that data by making post requests to the squid graphql server.
-
-If we are seeing slow responses, then we can save indexed data straight into the same db as the api.
-
-This wasn't done originally because of migrations. Subsquid has its own migrations and our api does too. To avoid potential conflicts, it was decided to keep the dbs separate to begin with.
-
-It is possible to index transactions with subsquid but they are more costly in terms of RPC calls, which is OK, if we need to do it. However, there is no point in double indexing the same data with transactions and logs at the same time.
 
 ### Prod Checklist
 
