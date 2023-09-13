@@ -7,6 +7,6 @@ services:
       POSTGRES_DB: v3-api
       POSTGRES_PASSWORD: postgres
     ports:
-      - "${DB_PORT}:5432"
+      - "${V3_DB_PORT}:5432"
       # command: ["postgres", "-c", "log_statement=all"]
     shm_size: 1gb
