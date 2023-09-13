@@ -41,6 +41,8 @@ Here is the default data you'd need to use to connect to the db:
 
 ![squid db config](./assets/squid-db.png)
 
+Port in the above depends on what you set in `.env` file.
+
 Password is `postgres`
 
 ---
