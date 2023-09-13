@@ -67,7 +67,6 @@ To have subsquid write to your own database locally, utilise the following envir
 
 To have hosted aquarium service pick up our external db, we need to re-define `DB_HOST`, `DB_PORT`, `DB_NAME` and `DB_USER` to point to the above. That is what you see before processors gets initialised in this codebase.
 
-
 ### Prod Checklist
 
 Right now, we are writing everything into the `main` branch of neondb.
