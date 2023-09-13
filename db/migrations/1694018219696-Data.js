@@ -19,29 +19,6 @@ module.exports = class Data1694018219696 {
         await db.query(`CREATE INDEX "idx_block_network" ON "block" ("network")`);
         await db.query(`CREATE INDEX "idx_block_timestamp" ON "block" ("timestamp")`);
 
-        // ====================
-        // TRANSACTION TABLE
-        // ====================
-
-        await db.query(`
-            CREATE TABLE "transaction" (
-                "id" varchar NOT NULL,
-                "network" text NOT NULL,
-                "block_number" integer,
-                "block_timestamp" TIMESTAMP WITH TIME ZONE NOT NULL,
-                "hash" text NOT NULL,
-                "to" text,
-                "from" text,
-                "status" integer,
-                CONSTRAINT "transaction_pkey" PRIMARY KEY ("id")
-            )
-        `);
-
-        await db.query(`CREATE INDEX "idx_transaction_network" ON "transaction" ("network")`);
-        await db.query(`CREATE INDEX "idx_transaction_block_timestamp" ON "transaction" ("block_timestamp")`);
-        await db.query(`CREATE INDEX "idx_transaction_to" ON "transaction" ("to")`);
-        await db.query(`CREATE INDEX "idx_transaction_from" ON "transaction" ("from")`);
-
         // ============================
         // RENTAL FACTORY EVENT TABLE
         // ============================
