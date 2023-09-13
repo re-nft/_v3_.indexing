@@ -8,6 +8,10 @@ deploy:
     rpc:
       - eth-sepolia:http
       - polygon-testnet:http
+  secrets: ["V3_DB_NAME", "V3_DB_HOST", "V3_DB_USER", "V3_DB_PASS"]
+  migrate:
+    cmd: ["echo", "skipping migrations"]
+
   processor:
     - name: eth-sepolia-processor
       cmd: ["node", "lib/eth-sepolia/main"]

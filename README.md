@@ -16,6 +16,19 @@ Note, that by default, it will generate indices for all the columns on the table
 
 ---
 
+Right now it's quite hacky (squid lib limitation) to run the migrations when you are using external db.
+
+We have switched off squid from running migrations itself (you cannot set `DB_NAME`, `DB_USER`, etc. meaningfully when deploying to aquarium). Therefore, it is your responsibility, to manually run migrations before you deploy. To do so, set correctly (**notice there is no `V3_` prefix!**):
+
+- `DB_HOST`
+- `DB_NAME`
+- `DB_USER`
+- `DB_PASS`
+
+in `.env` and then run `sqd migration:apply`
+
+---
+
 You can learn about all the commands at your disposal in `commands.json`
 
 To connect to the database and explore the data you can use various clients, for example:
@@ -44,13 +57,13 @@ To start mumbai indexing run:
 
 To have subsquid write to your own database locally, utilise the following environment variables:
 
-- `DB_HOST`
-- `DB_PORT`
-- `DB_NAME`
-- `DB_USER`
-- `PGSSLMODE=true`
+- `V3_DB_HOST`
+- `V3_DB_PORT`
+- `V3_DB_NAME`
+- `V3_DB_USER`
+- `PGSSLMODE=true` (you only need this if you are writing to neondb from local terminal)
 
-To have the above also persist in Aquarium, you need to re-define these before the processor gets initiliased.
+To have hosted aquarium service pick up our external db, we need to re-define `DB_HOST`, `DB_PORT`, `DB_NAME` and `DB_USER` to point to the above. That is what you see before processors gets initilised in this codebase.
 
 ## Optimisations
 
