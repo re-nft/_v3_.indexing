@@ -79,7 +79,6 @@ module.exports = class Data1694018219696 {
 
     async down(db) {
         await db.query(`DROP TABLE "block"`)
-        await db.query(`DROP TABLE "transaction"`)
         await db.query(`DROP TABLE "rental_factory_event_rental_safe_deployment"`)
         await db.query(`DROP TABLE "rental_manager_event_rental_started"`)
     }
