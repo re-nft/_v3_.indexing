@@ -10,6 +10,14 @@ import * as rentalFactoryAbi from "../abi/rental-factory";
 import * as rentalManagerAbi from "../abi/rental-manager";
 import * as consts from "../consts";
 
+// ! there is no clean way to do this
+// ! this is squid's team recommendation
+process.env.DB_NAME = process.env.V3_DB_NAME;
+process.env.DB_HOST = process.env.V3_DB_HOST;
+process.env.DB_PORT = process.env.V3_DB_PORT;
+process.env.DB_USER = process.env.V3_DB_USER;
+process.env.DB_PASS = process.env.V3_DB_PASS;
+
 export const processor = new EvmBatchProcessor()
   .setDataSource({
     archive: lookupArchive("polygon-mumbai", { type: "EVM" }),
