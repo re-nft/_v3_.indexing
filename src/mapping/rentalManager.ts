@@ -1,4 +1,8 @@
-import { type DataHandlerContext } from "@subsquid/evm-processor";
+import {
+  type DataHandlerContext,
+  type Log,
+  type Transaction,
+} from "@subsquid/evm-processor";
 import { toJSON } from "@subsquid/util-internal-json";
 import { type Store } from "../db";
 import { EntityBuffer } from "../entityBuffer";
@@ -9,14 +13,11 @@ import {
   //   RentalManagerFunctionSetZone,
 } from "../model";
 import * as spec from "../abi/rental-manager";
-// ! both eth-sepolia and polygon-mumbai are identical
-// ! therefore it is OK to do this
-import { type Log, type Transaction } from "../eth-sepolia/processor";
 import * as consts from "../consts";
 
 export function parseEvent(
   ctx: DataHandlerContext<Store>,
-  log: Log,
+  log: Log<typeof consts.FIELDS>,
   chain: consts.NETWORK,
 ): void {
   try {
@@ -80,7 +81,7 @@ export function parseEvent(
 
 export function parseFunction(
   ctx: DataHandlerContext<Store>,
-  transaction: Transaction,
+  transaction: Transaction<typeof consts.FIELDS>,
   chain: consts.NETWORK,
 ): void {
   try {

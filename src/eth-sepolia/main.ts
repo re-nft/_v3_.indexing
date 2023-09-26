@@ -1,38 +1,30 @@
-import { rentalFactory, rentalManager } from "../mapping";
-import { processor } from "./processor";
-import { TypeormDatabase } from "@subsquid/typeorm-store";
-import { EntityBuffer } from "../entityBuffer";
-import { Block } from "../model";
 import * as consts from "../consts";
 
-processor.run(
-  new TypeormDatabase({
-    supportHotBlocks: true,
-    stateSchema: "eth_sepolia_processor",
-  }),
-  async (ctx) => {
-    for (const block of ctx.blocks) {
-      EntityBuffer.add(
-        new Block({
-          id: block.header.id,
-          network: consts.NETWORK.ETH_SEPOLIA,
-          number: block.header.height,
-          timestamp: new Date(block.header.timestamp),
-        }),
-      );
+import { start } from "../processor";
 
-      for (const log of block.logs) {
-        if (log.address === consts.ETH_SEPOLIA_RENTAL_FACTORY_ADDRESS) {
-          rentalFactory.parseEvent(ctx, log, consts.NETWORK.ETH_SEPOLIA);
-        }
-        if (log.address === consts.ETH_SEPOLIA_RENTAL_MANAGER_ADDRESS) {
-          rentalManager.parseEvent(ctx, log, consts.NETWORK.ETH_SEPOLIA);
-        }
-      }
-    }
+// This can be "" | undefined.
+// eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+if (!process.env.RPC_ETH_SEPOLIA_HTTP) {
+  throw new Error(
+    `RPC_ETH_SEPOLIA_HTTP is "${process.env.RPC_ETH_SEPOLIA_HTTP}"`,
+  );
+}
 
-    for (const entities of EntityBuffer.flush()) {
-      await ctx.store.insert(entities);
-    }
+start({
+  dbOptions: { stateSchema: "eth_sepolia_processor" },
+  // I went through forked blocks here:
+  // https://sepolia.etherscan.io/blocks_forked?p=1 and I could only find one
+  // case where re-org depth exceeded 5 blocks: 22 blocks if re-org happens, I
+  // am not sure about this, because squid is supposed to handle automatically,
+  // but if error happens, all we would have to do is re-run / re-deploy the
+  // squid. So re-deploying once a year (for sepolia) is fine.
+  finalityConfirmation: 6,
+  network: consts.NETWORK.ETH_SEPOLIA,
+  rentalFactoryAddress: "0x2c2BBA22aA19Ba34bC5BA65e6c35Ce54DA36A33D",
+  rentalManagerAddress: "0xea0b609F81B3D7699a970e670ec471Daf687E5c2",
+  source: {
+    archive: { name: "sepolia" },
+    rpcUrl: process.env.RPC_ETH_SEPOLIA_HTTP,
   },
-);
+  startBlock: 3923754,
+});

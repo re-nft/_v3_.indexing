@@ -1,16 +1,13 @@
-import { type DataHandlerContext } from "@subsquid/evm-processor";
+import { type DataHandlerContext, type Log } from "@subsquid/evm-processor";
 import { type Store } from "../db";
 import { EntityBuffer } from "../entityBuffer";
 import { RentalFactoryEventRentalSafeDeployment } from "../model";
 import * as spec from "../abi/rental-factory";
-// ! both eth-sepolia and polygon-mumbai are identical
-// ! therefore it is OK to do this
-import { type Log } from "../eth-sepolia/processor";
 import * as consts from "../consts";
 
 export function parseEvent(
   ctx: DataHandlerContext<Store>,
-  log: Log,
+  log: Log<typeof consts.FIELDS>,
   chain: consts.NETWORK,
 ): void {
   try {
