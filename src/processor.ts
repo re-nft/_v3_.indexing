@@ -1,20 +1,20 @@
-import { rentalFactory, rentalManager } from "./mapping";
-import {
-  type TypeormDatabaseOptions,
-  TypeormDatabase,
-} from "@subsquid/typeorm-store";
-import { EntityBuffer } from "./entityBuffer";
-import { Block } from "./model";
-
-import { EvmBatchProcessor } from "@subsquid/evm-processor";
 import {
   type KnownArchivesEVM,
-  type LookupOptionsEVM,
   lookupArchive,
+  type LookupOptionsEVM,
 } from "@subsquid/archive-registry";
+import { EvmBatchProcessor } from "@subsquid/evm-processor";
+import {
+  TypeormDatabase,
+  type TypeormDatabaseOptions,
+} from "@subsquid/typeorm-store";
+
 import * as rentalFactoryAbi from "./abi/rental-factory";
 import * as rentalManagerAbi from "./abi/rental-manager";
 import * as consts from "./consts";
+import { EntityBuffer } from "./entityBuffer";
+import { rentalFactory, rentalManager } from "./mapping";
+import { Block } from "./model";
 
 // ! there is no clean way to do this
 // ! this is squid's team recommendation

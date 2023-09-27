@@ -4,6 +4,9 @@ import {
   type Transaction,
 } from "@subsquid/evm-processor";
 import { toJSON } from "@subsquid/util-internal-json";
+
+import * as spec from "../abi/rental-manager";
+import { type Fields, type NETWORK } from "../consts";
 import { type Store } from "../db";
 import { EntityBuffer } from "../entityBuffer";
 import {
@@ -12,8 +15,6 @@ import {
   RentalManagerFunctionRentFromZone,
   //   RentalManagerFunctionSetZone,
 } from "../model";
-import * as spec from "../abi/rental-manager";
-import { type Fields, type NETWORK } from "../consts";
 
 export function parseEvent(
   ctx: DataHandlerContext<Store>,

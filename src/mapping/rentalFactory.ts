@@ -1,9 +1,10 @@
 import { type DataHandlerContext, type Log } from "@subsquid/evm-processor";
+
+import * as spec from "../abi/rental-factory";
+import { type Fields, type NETWORK } from "../consts";
 import { type Store } from "../db";
 import { EntityBuffer } from "../entityBuffer";
 import { RentalFactoryEventRentalSafeDeployment } from "../model";
-import * as spec from "../abi/rental-factory";
-import { type Fields, type NETWORK } from "../consts";
 
 export function parseEvent(
   ctx: DataHandlerContext<Store>,
