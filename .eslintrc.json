@@ -14,6 +14,7 @@
     "plugins": [
         "simple-import-sort"
     ],
+    "root": true,
     "rules": {
         "simple-import-sort/imports": "error",
         "simple-import-sort/exports": "error",
