@@ -1,5 +1,4 @@
-import * as consts from "../consts";
-
+import { NETWORK } from "../consts";
 import { start } from "../processor";
 
 // This can be "" | undefined.
@@ -19,7 +18,7 @@ start({
   // but if error happens, all we would have to do is re-run / re-deploy the
   // squid. So re-deploying once a year (for sepolia) is fine.
   finalityConfirmation: 6,
-  network: consts.NETWORK.ETH_SEPOLIA,
+  network: NETWORK.ETH_SEPOLIA,
   rentalFactoryAddress: "0x2c2BBA22aA19Ba34bC5BA65e6c35Ce54DA36A33D",
   rentalManagerAddress: "0xea0b609F81B3D7699a970e670ec471Daf687E5c2",
   source: {

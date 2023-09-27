@@ -3,12 +3,12 @@ import { type Store } from "../db";
 import { EntityBuffer } from "../entityBuffer";
 import { RentalFactoryEventRentalSafeDeployment } from "../model";
 import * as spec from "../abi/rental-factory";
-import * as consts from "../consts";
+import { type Fields, type NETWORK } from "../consts";
 
 export function parseEvent(
   ctx: DataHandlerContext<Store>,
-  log: Log<typeof consts.FIELDS>,
-  chain: consts.NETWORK,
+  log: Log<Fields>,
+  chain: NETWORK,
 ): void {
   try {
     switch (log.topics[0]) {
@@ -40,7 +40,7 @@ export function parseEvent(
         error,
         blockNumber: log.block.height,
         blockHash: log.block.hash,
-        address: consts.CONTRACT_ADDRESS[chain][consts.CONTRACT.RENTAL_FACTORY],
+        address: log.address,
       },
       `Unable to decode event "${log.topics[0]}"`,
     );

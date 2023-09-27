@@ -13,12 +13,12 @@ import {
   //   RentalManagerFunctionSetZone,
 } from "../model";
 import * as spec from "../abi/rental-manager";
-import * as consts from "../consts";
+import { type Fields, type NETWORK } from "../consts";
 
 export function parseEvent(
   ctx: DataHandlerContext<Store>,
-  log: Log<typeof consts.FIELDS>,
-  chain: consts.NETWORK,
+  log: Log<Fields>,
+  chain: NETWORK,
 ): void {
   try {
     switch (log.topics[0]) {
@@ -72,7 +72,7 @@ export function parseEvent(
         error,
         blockNumber: log.block.height,
         blockHash: log.block.hash,
-        address: consts.CONTRACT_ADDRESS[chain][consts.CONTRACT.RENTAL_MANAGER],
+        address: log.address,
       },
       `Unable to decode event "${log.topics[0]}"`,
     );
@@ -81,8 +81,9 @@ export function parseEvent(
 
 export function parseFunction(
   ctx: DataHandlerContext<Store>,
-  transaction: Transaction<typeof consts.FIELDS>,
-  chain: consts.NETWORK,
+  transaction: Transaction<Fields>,
+  chain: NETWORK,
+  contractAddress: string,
 ): void {
   try {
     switch (transaction.input.slice(0, 10)) {
@@ -122,7 +123,7 @@ export function parseFunction(
         error,
         blockNumber: transaction.block.height,
         blockHash: transaction.block.hash,
-        address: consts.CONTRACT_ADDRESS[chain][consts.CONTRACT.RENTAL_MANAGER],
+        address: contractAddress,
       },
       `Unable to decode function "${transaction.input.slice(0, 10)}"`,
     );

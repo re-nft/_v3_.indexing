@@ -65,11 +65,13 @@ export function start({
     .setFinalityConfirmation(finalityConfirmation)
     .setFields(consts.FIELDS)
     .addLog({
+      // ! super critical to lower case the addresses, otherwise it won't index
       address: [rentalFactoryAddress.toLowerCase()],
       topic0: [rentalFactoryAbi.events.RentalSafeDeployment.topic],
       range: { from: startBlock },
     })
     .addLog({
+      // ! super critical to lower case the addresses, otherwise it won't index
       address: [rentalManagerAddress.toLowerCase()],
       topic0: [
         rentalManagerAbi.events.RentalStarted.topic,
