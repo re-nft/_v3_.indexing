@@ -1,3 +1,5 @@
+import { lookupArchive } from "@subsquid/archive-registry";
+
 import { NETWORK } from "../consts";
 import { start } from "../processor";
 
@@ -16,8 +18,8 @@ start({
   rentalFactoryAddress: "0x9D2068f09D908330cE24887ab3113Ce037EFF26f",
   rentalManagerAddress: "0x7A21CFf58c14FA9c46656dBAa7aA5C569e67f83A",
   source: {
-    archive: { name: "polygon-mumbai" },
-    rpcUrl: process.env.RPC_POLYGON_TESTNET_HTTP,
+    archive: lookupArchive("polygon-mumbai", { type: "EVM" }),
+    chain: process.env.RPC_POLYGON_TESTNET_HTTP,
   },
   startBlock: 39817388,
 });

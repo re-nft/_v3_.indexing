@@ -1,3 +1,5 @@
+import { lookupArchive } from "@subsquid/archive-registry";
+
 import { NETWORK } from "../consts";
 import { start } from "../processor";
 
@@ -22,8 +24,8 @@ start({
   rentalFactoryAddress: "0x2c2BBA22aA19Ba34bC5BA65e6c35Ce54DA36A33D",
   rentalManagerAddress: "0xea0b609F81B3D7699a970e670ec471Daf687E5c2",
   source: {
-    archive: { name: "sepolia" },
-    rpcUrl: process.env.RPC_ETH_SEPOLIA_HTTP,
+    archive: lookupArchive("sepolia", { type: "EVM" }),
+    chain: process.env.RPC_ETH_SEPOLIA_HTTP,
   },
   startBlock: 3923754,
 });

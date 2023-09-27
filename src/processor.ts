@@ -1,9 +1,4 @@
-import {
-  type KnownArchivesEVM,
-  lookupArchive,
-  type LookupOptionsEVM,
-} from "@subsquid/archive-registry";
-import { EvmBatchProcessor } from "@subsquid/evm-processor";
+import { type DataSource, EvmBatchProcessor } from "@subsquid/evm-processor";
 import {
   TypeormDatabase,
   type TypeormDatabaseOptions,
@@ -30,15 +25,7 @@ interface EvmIndexerOptions {
   network: consts.NETWORK;
   rentalFactoryAddress: string;
   rentalManagerAddress: string;
-  source: {
-    archive:
-      | string
-      | {
-          name: KnownArchivesEVM;
-          options?: LookupOptionsEVM;
-        };
-    rpcUrl: string;
-  };
+  source: DataSource;
   startBlock: number;
 }
 
@@ -52,16 +39,7 @@ export function start({
   startBlock,
 }: EvmIndexerOptions): void {
   const processor = new EvmBatchProcessor()
-    .setDataSource({
-      archive:
-        typeof source.archive === "string"
-          ? source.archive
-          : lookupArchive(source.archive.name, {
-              type: "EVM",
-              ...source.archive.options,
-            }),
-      chain: source.rpcUrl,
-    })
+    .setDataSource(source)
     .setFinalityConfirmation(finalityConfirmation)
     .setFields(consts.FIELDS)
     .addLog({
