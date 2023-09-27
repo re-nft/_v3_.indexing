@@ -61,7 +61,7 @@
       "process:prod:eth-sepolia": {
         "description": "Start the squid processor",
         "deps": ["migration:apply"],
-        "cmd": ["node", "lib/eth-sepolia/main.js"],
+        "cmd": ["node", "lib/processors/eth-sepolia.js"],
         "hidden": true
       },
       "process:polygon-mumbai": {
@@ -72,7 +72,7 @@
       "process:prod:polygon-mumbai": {
         "description": "Start the squid processor",
         "deps": ["migration:apply"],
-        "cmd": ["node", "lib/polygon-mumbai/main.js"],
+        "cmd": ["node", "lib/processors/polygon-mumbai.js"],
         "hidden": true
       },
       "serve": {
