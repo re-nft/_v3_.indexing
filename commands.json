@@ -56,7 +56,7 @@
       "process:eth-sepolia": {
         "description": "Load .env and start the ETH-SEPOLIA squid processor",
         "deps": ["build", "migration:apply"],
-        "cmd": ["node", "--require=dotenv/config", "lib/eth-sepolia/main.js"]
+        "cmd": ["node", "--require=dotenv/config", "lib/processors/eth-sepolia.js"]
       },
       "process:prod:eth-sepolia": {
         "description": "Start the squid processor",
@@ -67,7 +67,7 @@
       "process:polygon-mumbai": {
         "description": "Load .env and start the ETH-SEPOLIA squid processor",
         "deps": ["build", "migration:apply"],
-        "cmd": ["node", "--require=dotenv/config", "lib/polygon-mumbai/main.js"]
+        "cmd": ["node", "--require=dotenv/config", "lib/processors/polygon-mumbai.js"]
       },
       "process:prod:polygon-mumbai": {
         "description": "Start the squid processor",
