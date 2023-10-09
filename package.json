@@ -4,16 +4,10 @@
   "scripts": {
     "build": "rm -rf lib/ && tsc",
     "lint": "eslint 'src/**/*.{js,ts,tsx}'",
-    "format": "prettier --write 'src/**/*.{js,ts,tsx}'",
-    "start": "concurrently npm:start:process npm:start:serve",
-    "start:process": "concurrently npm:start:process:*",
-    "start:process:eth-sepolia": "sqd process:eth-sepolia",
-    "start:process:polygon-mumbai": "sqd process:polygon-mumbai",
-    "start:serve": "sqd serve"
+    "format": "prettier --write 'src/**/*.{js,ts,tsx}'"
   },
   "dependencies": {
     "@subsquid/archive-registry": "^3.0.0",
-    "@subsquid/cli": "2.5.0",
     "@subsquid/evm-processor": "^1.5.1",
     "@subsquid/graphql-server": "^4.2.0",
     "@subsquid/typeorm-migration": "^1.2.0",
@@ -30,7 +24,6 @@
     "@subsquid/typeorm-codegen": "^1.2.0",
     "@types/node": "^18.16.17",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
-    "concurrently": "^8.2.1",
     "eslint": "^8.48.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard-with-typescript": "^39.0.0",
