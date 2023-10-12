@@ -10,6 +10,6 @@ export const config: EvmIndexerOptions = {
   source: {
     chain: process.env.RPC_ETH_SEPOLIA_FORK_HTTP ?? "http://127.0.0.1:8545",
   },
-  // TODO: explain these magic numbers
+  // block number where both rental factory and rental manager were deployed
   startBlock: 3923754,
 };
