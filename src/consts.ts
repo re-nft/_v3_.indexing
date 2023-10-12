@@ -17,5 +17,6 @@ export type Fields = typeof FIELDS;
 
 export enum NETWORK {
   ETH_SEPOLIA = "eth-sepolia",
+  ETH_SEPOLIA_FORK = "eth-sepolia-fork",
   POLYGON_MUMBAI = "polygon-mumbai",
 }
