@@ -40,6 +40,7 @@ export function start({
   startBlock,
   endBlock,
 }: EvmIndexerOptions): void {
+  // ! super critical to lower case the addresses, otherwise it won't index
   const rentalFactoryAddress = rawRentalFactoryAddress.toLowerCase();
   const rentalManagerAddress = rawRentalManagerAddress.toLowerCase();
 
@@ -48,13 +49,11 @@ export function start({
     .setFinalityConfirmation(finalityConfirmation)
     .setFields(consts.FIELDS)
     .addLog({
-      // ! super critical to lower case the addresses, otherwise it won't index
       address: [rentalFactoryAddress],
       topic0: [rentalFactoryAbi.events.RentalSafeDeployment.topic],
       range: { from: startBlock, to: endBlock },
     })
     .addLog({
-      // ! super critical to lower case the addresses, otherwise it won't index
       address: [rentalManagerAddress],
       topic0: [
         rentalManagerAbi.events.RentalStarted.topic,
