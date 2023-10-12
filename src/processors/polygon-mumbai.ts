@@ -21,6 +21,6 @@ start({
     archive: lookupArchive("polygon-mumbai", { type: "EVM" }),
     chain: process.env.RPC_POLYGON_TESTNET_HTTP,
   },
-  // TODO: explain these magic numbers
+  // block number where both rental factory and rental manager were deployed
   startBlock: 39817388,
 });
