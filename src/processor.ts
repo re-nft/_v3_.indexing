@@ -34,24 +34,28 @@ export function start({
   dbOptions,
   finalityConfirmation,
   network,
-  rentalFactoryAddress,
-  rentalManagerAddress,
+  rentalFactoryAddress: rawRentalFactoryAddress,
+  rentalManagerAddress: rawRentalManagerAddress,
   source,
   startBlock,
+  endBlock,
 }: EvmIndexerOptions): void {
+  const rentalFactoryAddress = rawRentalFactoryAddress.toLowerCase();
+  const rentalManagerAddress = rawRentalManagerAddress.toLowerCase();
+
   const processor = new EvmBatchProcessor()
     .setDataSource(source)
     .setFinalityConfirmation(finalityConfirmation)
     .setFields(consts.FIELDS)
     .addLog({
       // ! super critical to lower case the addresses, otherwise it won't index
-      address: [rentalFactoryAddress.toLowerCase()],
+      address: [rentalFactoryAddress],
       topic0: [rentalFactoryAbi.events.RentalSafeDeployment.topic],
       range: { from: startBlock, to: endBlock },
     })
     .addLog({
       // ! super critical to lower case the addresses, otherwise it won't index
-      address: [rentalManagerAddress.toLowerCase()],
+      address: [rentalManagerAddress],
       topic0: [
         rentalManagerAbi.events.RentalStarted.topic,
         rentalManagerAbi.events.RentalStopped.topic,
