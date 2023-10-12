@@ -74,7 +74,7 @@ export function start({
         EntityBuffer.add(
           new Block({
             id: block.header.id,
-            network: consts.NETWORK.ETH_SEPOLIA,
+            network,
             number: block.header.height,
             timestamp: new Date(block.header.timestamp),
           }),
