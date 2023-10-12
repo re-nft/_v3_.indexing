@@ -15,7 +15,7 @@ start({
   rentalManagerAddress: "0xea0b609F81B3D7699a970e670ec471Daf687E5c2",
   source: {
     // archive: lookupArchive("sepolia", { type: "EVM" }),
-    chain: process.env.RPC_ETH_SEPOLIA_HTTP_LOCAL ?? "http://127.0.0.1:8545",
+    chain: process.env.RPC_ETH_SEPOLIA_HTTP_FORK ?? "http://127.0.0.1:8545",
   },
   startBlock: 3923754,
   // endBlock: 4094014,
