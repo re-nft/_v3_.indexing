@@ -27,6 +27,7 @@ interface EvmIndexerOptions {
   rentalManagerAddress: string;
   source: DataSource;
   startBlock: number;
+  endBlock?: number;
 }
 
 export function start({
@@ -46,7 +47,7 @@ export function start({
       // ! super critical to lower case the addresses, otherwise it won't index
       address: [rentalFactoryAddress.toLowerCase()],
       topic0: [rentalFactoryAbi.events.RentalSafeDeployment.topic],
-      range: { from: startBlock },
+      range: { from: startBlock, to: endBlock },
     })
     .addLog({
       // ! super critical to lower case the addresses, otherwise it won't index
@@ -55,7 +56,7 @@ export function start({
         rentalManagerAbi.events.RentalStarted.topic,
         rentalManagerAbi.events.RentalStopped.topic,
       ],
-      range: { from: startBlock },
+      range: { from: startBlock, to: endBlock },
     });
 
   const logParsers = {
