@@ -21,5 +21,6 @@ start({
     archive: lookupArchive("polygon-mumbai", { type: "EVM" }),
     chain: process.env.RPC_POLYGON_TESTNET_HTTP,
   },
+  // TODO: explain these magic numbers
   startBlock: 39817388,
 });

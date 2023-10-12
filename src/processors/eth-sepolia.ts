@@ -27,5 +27,6 @@ start({
     archive: lookupArchive("sepolia", { type: "EVM" }),
     chain: process.env.RPC_ETH_SEPOLIA_HTTP,
   },
+  // TODO: explain these magic numbers
   startBlock: 3923754,
 });
