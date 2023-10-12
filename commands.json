@@ -58,10 +58,20 @@
         "deps": ["build", "migration:apply"],
         "cmd": ["node", "--require=dotenv/config", "lib/processors/eth-sepolia.js"]
       },
-      "process:eth-sepolia-fork": {
-        "description": "Load .env and start the ETH-SEPOLIA squid processor",
+      "process:eth-sepolia-fork:archive": {
+        "description": "Load .env and start the ETH-SEPOLIA-FORK squid archive processor",
         "deps": ["build", "migration:apply"],
-        "cmd": ["node", "--require=dotenv/config", "lib/processors/eth-sepolia-fork.js"]
+        "cmd": ["node", "--require=dotenv/config", "lib/processors/eth-sepolia-fork/archive.js"]
+      },
+      "process:eth-sepolia-fork:chain": {
+        "description": "Load .env and start the ETH-SEPOLIA-FORK squid chain processor",
+        "deps": ["build", "migration:apply"],
+        "cmd": ["node", "--require=dotenv/config", "lib/processors/eth-sepolia-fork/chain.js"]
+      },
+      "process:eth-sepolia-fork": {
+        "description": "Load .env and start the ETH-SEPOLIA-FORK squid chain processor",
+        "deps": ["build", "migration:apply", "process:eth-sepolia-fork:archive"],
+        "cmd": ["node", "--require=dotenv/config", "lib/processors/eth-sepolia-fork/chain.js"]
       },
       "process:prod:eth-sepolia": {
         "description": "Start the squid processor",

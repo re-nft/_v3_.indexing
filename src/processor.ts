@@ -19,7 +19,7 @@ process.env.DB_PORT = process.env.V3_DB_PORT;
 process.env.DB_USER = process.env.V3_DB_USER;
 process.env.DB_PASS = process.env.V3_DB_PASS;
 
-interface EvmIndexerOptions {
+export interface EvmIndexerOptions {
   dbOptions: TypeormDatabaseOptions;
   finalityConfirmation: number;
   network: consts.NETWORK;
