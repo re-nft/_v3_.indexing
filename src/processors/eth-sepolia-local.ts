@@ -17,6 +17,7 @@ start({
     // archive: lookupArchive("sepolia", { type: "EVM" }),
     chain: process.env.RPC_ETH_SEPOLIA_HTTP_FORK ?? "http://127.0.0.1:8545",
   },
+  // TODO: explain these magic numbers
   startBlock: 3923754,
   // endBlock: 4094014,
 });
