@@ -1,5 +1,12 @@
-import { type DataHandlerContext } from "@subsquid/evm-processor";
+import {
+  type DataHandlerContext,
+  type Log,
+  type Transaction,
+} from "@subsquid/evm-processor";
 import { toJSON } from "@subsquid/util-internal-json";
+
+import * as spec from "../abi/rental-manager";
+import { type Fields, type NETWORK } from "../consts";
 import { type Store } from "../db";
 import { EntityBuffer } from "../entityBuffer";
 import {
@@ -8,16 +15,11 @@ import {
   RentalManagerFunctionRentFromZone,
   //   RentalManagerFunctionSetZone,
 } from "../model";
-import * as spec from "../abi/rental-manager";
-// ! both eth-sepolia and polygon-mumbai are identical
-// ! therefore it is OK to do this
-import { type Log, type Transaction } from "../eth-sepolia/processor";
-import * as consts from "../consts";
 
 export function parseEvent(
   ctx: DataHandlerContext<Store>,
-  log: Log,
-  chain: consts.NETWORK,
+  log: Log<Fields>,
+  chain: NETWORK,
 ): void {
   try {
     switch (log.topics[0]) {
@@ -71,7 +73,7 @@ export function parseEvent(
         error,
         blockNumber: log.block.height,
         blockHash: log.block.hash,
-        address: consts.CONTRACT_ADDRESS[chain][consts.CONTRACT.RENTAL_MANAGER],
+        address: log.address,
       },
       `Unable to decode event "${log.topics[0]}"`,
     );
@@ -80,8 +82,9 @@ export function parseEvent(
 
 export function parseFunction(
   ctx: DataHandlerContext<Store>,
-  transaction: Transaction,
-  chain: consts.NETWORK,
+  transaction: Transaction<Fields>,
+  chain: NETWORK,
+  contractAddress: string,
 ): void {
   try {
     switch (transaction.input.slice(0, 10)) {
@@ -121,7 +124,7 @@ export function parseFunction(
         error,
         blockNumber: transaction.block.height,
         blockHash: transaction.block.hash,
-        address: consts.CONTRACT_ADDRESS[chain][consts.CONTRACT.RENTAL_MANAGER],
+        address: contractAddress,
       },
       `Unable to decode function "${transaction.input.slice(0, 10)}"`,
     );

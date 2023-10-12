@@ -1,17 +1,15 @@
-import { type DataHandlerContext } from "@subsquid/evm-processor";
+import { type DataHandlerContext, type Log } from "@subsquid/evm-processor";
+
+import * as spec from "../abi/rental-factory";
+import { type Fields, type NETWORK } from "../consts";
 import { type Store } from "../db";
 import { EntityBuffer } from "../entityBuffer";
 import { RentalFactoryEventRentalSafeDeployment } from "../model";
-import * as spec from "../abi/rental-factory";
-// ! both eth-sepolia and polygon-mumbai are identical
-// ! therefore it is OK to do this
-import { type Log } from "../eth-sepolia/processor";
-import * as consts from "../consts";
 
 export function parseEvent(
   ctx: DataHandlerContext<Store>,
-  log: Log,
-  chain: consts.NETWORK,
+  log: Log<Fields>,
+  chain: NETWORK,
 ): void {
   try {
     switch (log.topics[0]) {
@@ -43,7 +41,7 @@ export function parseEvent(
         error,
         blockNumber: log.block.height,
         blockHash: log.block.hash,
-        address: consts.CONTRACT_ADDRESS[chain][consts.CONTRACT.RENTAL_FACTORY],
+        address: log.address,
       },
       `Unable to decode event "${log.topics[0]}"`,
     );

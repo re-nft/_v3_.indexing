@@ -11,7 +11,13 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
+    "plugins": [
+        "simple-import-sort"
+    ],
+    "root": true,
     "rules": {
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
         "max-len": ["error", { "code": 80 }],
         "quotes": ["error", "double"]
     }
