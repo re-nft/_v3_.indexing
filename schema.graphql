@@ -16,22 +16,39 @@ type Transaction @entity {
     status: Int @index
 }
 
-type RentalFactoryEventRentalSafeDeployment @entity {
-    id: ID!
-    network: String! @index
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    eventName: String! @index
-    safe: String!
-    rentalManager: String!
-    guard: String!
-    owner: String!
-    nonce: BigInt!
+# enum ItemType {
+#     RENTAL,
+#     PAYMENT
+# }
+#
+# enum SettleTo {
+#     LENDER,
+#     RENTER
+# }
+
+type Item @entity {
+  id: ID! @index
+  rentalStarted: RentalStarted!
+
+  # itemType: ItemType!
+  # settleTo: SettleTo!
+  itemType: Int!
+  settleTo: Int!
+  token: String! # address
+  amount: BigInt! # uint256
+  identifier: BigInt! # uint256
 }
 
-type RentalManagerEventRentalStarted @entity {
+type Hook @entity {
+  id: ID! @index
+  rentalStarted: RentalStarted!
+
+  target: String! # address
+  itemIndex: BigInt! # uint256
+  extraData: String! # bytes
+}
+
+type RentalStarted @entity {
     id: ID!
     network: String! @index
     blockNumber: Int! @index
@@ -39,61 +56,26 @@ type RentalManagerEventRentalStarted @entity {
     transactionHash: String! @index
     contract: String! @index
     eventName: String! @index
+
+    orderHash: String! @index # bytes32
+    emittedExtraData: String! # bytes
+    seaportOrderHash: String! @index # bytes32
+    items: [Item!]! @derivedFrom(field: "rentalStarted")
+    hooks: [Hook!]! @derivedFrom(field: "rentalStarted")
+    lender: String! @index # address
+    renter: String! @index # address
+    rentalWallet: String! @index # address
+    endTimestamp: BigInt! # uint256
+}
+
+type RentalStopped @entity {
+    id: ID!
+    network: String! @index
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    eventName: String! @index
+
     seaportOrderHash: String! @index
-    renterWallet: String! @index
-    lender: String! @index
-    collection: String!
-    tokenId: BigInt!
-    fulfiller: String!
-    rentEndTimestamp: BigInt!
 }
-
-type RentalManagerEventRentalStopped @entity {
-    id: ID!
-    network: String! @index
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    eventName: String! @index
-    seaportOrderHash: String! @index
-    renterWallet: String! @index
-    lender: String! @index
-    collection: String!
-    tokenId: BigInt!
-    stopper: String!
-}
-
-type RentalManagerFunctionRentFromZone @entity {
-    id: ID!
-    network: String! @index
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    functionName: String! @index
-    functionValue: BigInt
-    functionSuccess: Boolean @index
-    payload: JSON!
-    seaportOrderHash: String!
-    seaportZoneHash: String!
-    offer: JSON!
-    consideration: JSON!
-    seaportFulfiller: String!
-    offerer: String!
-    signature: String!
-}
-
-type RentalManagerFunctionSetZone @entity {
-    id: ID!
-    network: String! @index
-    blockNumber: Int! @index
-    blockTimestamp: DateTime! @index
-    transactionHash: String! @index
-    contract: String! @index
-    functionName: String! @index
-    functionValue: BigInt
-    functionSuccess: Boolean @index
-    newZone: String!
-}
-

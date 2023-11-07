@@ -15,12 +15,12 @@ start({
   dbOptions: { stateSchema: "polygon_mumbai_processor" },
   finalityConfirmation: 50,
   network: NETWORK.POLYGON_MUMBAI,
-  rentalFactoryAddress: "0x9D2068f09D908330cE24887ab3113Ce037EFF26f",
-  rentalManagerAddress: "0x7A21CFf58c14FA9c46656dBAa7aA5C569e67f83A",
+  createAddress: "0x8fa566b4441aE0b5Dd16d912246193485eB667c3",
+  stopAddress: "0x7832906C3340533a01d60D0eb38a6E80D9275d86",
   source: {
     archive: lookupArchive("polygon-mumbai", { type: "EVM" }),
     chain: process.env.RPC_POLYGON_TESTNET_HTTP,
   },
   // block number where both rental factory and rental manager were deployed
-  startBlock: 39817388,
+  startBlock: 41452693,
 });

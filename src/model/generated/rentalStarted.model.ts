@@ -1,9 +1,11 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_} from "typeorm"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_, OneToMany as OneToMany_} from "typeorm"
 import * as marshal from "./marshal"
+import {Item} from "./item.model"
+import {Hook} from "./hook.model"
 
 @Entity_()
-export class RentalManagerFunctionRentFromZone {
-    constructor(props?: Partial<RentalManagerFunctionRentFromZone>) {
+export class RentalStarted {
+    constructor(props?: Partial<RentalStarted>) {
         Object.assign(this, props)
     }
 
@@ -32,36 +34,37 @@ export class RentalManagerFunctionRentFromZone {
 
     @Index_()
     @Column_("text", {nullable: false})
-    functionName!: string
-
-    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: true})
-    functionValue!: bigint | undefined | null
+    eventName!: string
 
     @Index_()
-    @Column_("bool", {nullable: true})
-    functionSuccess!: boolean | undefined | null
+    @Column_("text", {nullable: false})
+    orderHash!: string
 
-    @Column_("jsonb", {nullable: false})
-    payload!: unknown
+    @Column_("text", {nullable: false})
+    emittedExtraData!: string
 
+    @Index_()
     @Column_("text", {nullable: false})
     seaportOrderHash!: string
 
+    @OneToMany_(() => Item, e => e.rentalStarted)
+    items!: Item[]
+
+    @OneToMany_(() => Hook, e => e.rentalStarted)
+    hooks!: Hook[]
+
+    @Index_()
     @Column_("text", {nullable: false})
-    seaportZoneHash!: string
+    lender!: string
 
-    @Column_("jsonb", {nullable: false})
-    offer!: unknown
-
-    @Column_("jsonb", {nullable: false})
-    consideration!: unknown
-
+    @Index_()
     @Column_("text", {nullable: false})
-    seaportFulfiller!: string
+    renter!: string
 
+    @Index_()
     @Column_("text", {nullable: false})
-    offerer!: string
+    rentalWallet!: string
 
-    @Column_("text", {nullable: false})
-    signature!: string
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    endTimestamp!: bigint
 }

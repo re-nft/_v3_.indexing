@@ -1,2 +1,2 @@
-export * as rentalFactory from "./rentalFactory";
-export * as rentalManager from "./rentalManager";
+export * as create from "./create";
+export * as stop from "./stop";

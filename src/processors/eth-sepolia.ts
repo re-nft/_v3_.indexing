@@ -21,12 +21,12 @@ start({
   // squid. So re-deploying once a year (for sepolia) is fine.
   finalityConfirmation: 6,
   network: NETWORK.ETH_SEPOLIA,
-  rentalFactoryAddress: "0x2c2BBA22aA19Ba34bC5BA65e6c35Ce54DA36A33D",
-  rentalManagerAddress: "0xea0b609F81B3D7699a970e670ec471Daf687E5c2",
+  createAddress: "0x5611e4Db722f4a125D88F202A4C3e5F8cBc85F27",
+  stopAddress: "0x0444B6f065758F3c12579418DE4d6050c674A704",
   source: {
     archive: lookupArchive("sepolia", { type: "EVM" }),
     chain: process.env.RPC_ETH_SEPOLIA_HTTP,
   },
   // block number where both rental factory and rental manager were deployed
-  startBlock: 3923754,
+  startBlock: 4530351,
 });

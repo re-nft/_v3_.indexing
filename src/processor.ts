@@ -4,11 +4,11 @@ import {
   type TypeormDatabaseOptions,
 } from "@subsquid/typeorm-store";
 
-import * as rentalFactoryAbi from "./abi/rental-factory";
-import * as rentalManagerAbi from "./abi/rental-manager";
+import * as createAbi from "./abi/create";
+import * as stopAbi from "./abi/stop";
 import * as consts from "./consts";
 import { EntityBuffer } from "./entityBuffer";
-import { rentalFactory, rentalManager } from "./mapping";
+import { create, stop } from "./mapping";
 import { Block } from "./model";
 
 // ! there is no clean way to do this
@@ -23,8 +23,8 @@ export interface EvmIndexerOptions {
   dbOptions: TypeormDatabaseOptions;
   finalityConfirmation: number;
   network: consts.NETWORK;
-  rentalFactoryAddress: string;
-  rentalManagerAddress: string;
+  createAddress: string;
+  stopAddress: string;
   source: DataSource;
   startBlock: number;
   endBlock?: number;
@@ -34,37 +34,36 @@ export function start({
   dbOptions,
   finalityConfirmation,
   network,
-  rentalFactoryAddress: rawRentalFactoryAddress,
-  rentalManagerAddress: rawRentalManagerAddress,
+  createAddress: rawCreateAddress,
+  stopAddress: rawStopAddress,
   source,
   startBlock,
   endBlock,
 }: EvmIndexerOptions): void {
   // ! super critical to lower case the addresses, otherwise it won't index
-  const rentalFactoryAddress = rawRentalFactoryAddress.toLowerCase();
-  const rentalManagerAddress = rawRentalManagerAddress.toLowerCase();
+  const createAddress = rawCreateAddress.toLowerCase();
+  const stopAddress = rawStopAddress.toLowerCase();
 
   const processor = new EvmBatchProcessor()
     .setDataSource(source)
     .setFinalityConfirmation(finalityConfirmation)
     .setFields(consts.FIELDS)
     .addLog({
-      address: [rentalFactoryAddress],
-      topic0: [rentalFactoryAbi.events.RentalSafeDeployment.topic],
+      address: [createAddress],
+      topic0: [createAbi.events.RentalOrderStarted.topic],
       range: { from: startBlock, to: endBlock },
     })
     .addLog({
-      address: [rentalManagerAddress],
+      address: [stopAddress],
       topic0: [
-        rentalManagerAbi.events.RentalStarted.topic,
-        rentalManagerAbi.events.RentalStopped.topic,
+        stopAbi.events.RentalOrderStopped.topic,
       ],
       range: { from: startBlock, to: endBlock },
     });
 
   const logParsers = {
-    [rentalFactoryAddress]: rentalFactory.parseEvent,
-    [rentalManagerAddress]: rentalManager.parseEvent,
+    [createAddress]: create.parseEvent,
+    [stopAddress]: stop.parseEvent,
   };
 
   processor.run(

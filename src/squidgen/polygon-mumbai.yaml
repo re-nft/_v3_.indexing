@@ -2,19 +2,24 @@ archive: sepolia
 target:
   type: postgres
 contracts:
-  - name: rental-factory
-    address: "0x936A9E959ad3f8d79134b61051123c32CEe62F25"
-    abi: ../../abi/rental-factory.json
+  # - name: factory
+  #   address: "0x936A9E959ad3f8d79134b61051123c32CEe62F25"
+  #   abi: ../../abi/rental-factory.json
+  #   range:
+  #     from: 39784442
+  #   events:
+  #     - RentalSafeDeployment
+  - name: create
+    address: "0x8fa566b4441aE0b5Dd16d912246193485eB667c3"
+    abi: ../../abi/create.json
     range:
-      from: 39784442
+      from: 41452693
     events:
-      - RentalSafeDeployment
-  - name: rental-manager
-    address: "0xB5A0aB4B81B2621ef166E9f6E941A00b44c619b2"
-    abi: ../../abi/rental-manager.json
+      - RentalOrderStarted
+  - name: stop
+    address: "0x7832906C3340533a01d60D0eb38a6E80D9275d86"
+    abi: ../../abi/stop.json
     range:
-      from: 39784442
+      from: 41452693
     events:
-      - RentalStarted
-      - RentalStopped
-    functions: true
+      - RentalOrderStopped
