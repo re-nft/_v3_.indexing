@@ -1,9 +1,11 @@
-module.exports = class Data1699388449731 {
-    name = 'Data1699388449731'
+module.exports = class Data1699395451901 {
+    name = 'Data1699395451901'
 
     async up(db) {
-        await db.query(`DROP INDEX "public"."idx_block_network"`)
-        await db.query(`DROP INDEX "public"."idx_block_timestamp"`)
+        await db.query(`CREATE TABLE "block" ("id" character varying NOT NULL, "network" text NOT NULL, "number" integer NOT NULL, "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL, CONSTRAINT "PK_d0925763efb591c2e2ffb267572" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE INDEX "IDX_ea1ca207644ac464e727327c38" ON "block" ("network") `)
+        await db.query(`CREATE INDEX "IDX_38414873c187a3e0c7943bc4c7" ON "block" ("number") `)
+        await db.query(`CREATE INDEX "IDX_5c67cbcf4960c1a39e5fe25e87" ON "block" ("timestamp") `)
         await db.query(`CREATE TABLE "transaction" ("id" character varying NOT NULL, "network" text NOT NULL, "block_number" integer, "block_timestamp" TIMESTAMP WITH TIME ZONE NOT NULL, "hash" text NOT NULL, "to" text, "from" text, "status" integer, CONSTRAINT "PK_89eadb93a89810556e1cbcd6ab9" PRIMARY KEY ("id"))`)
         await db.query(`CREATE INDEX "IDX_05e00879718cfc101c744472ad" ON "transaction" ("network") `)
         await db.query(`CREATE INDEX "IDX_2d99bb5a0ab5fb8cf8b746eb39" ON "transaction" ("block_number") `)
@@ -36,16 +38,15 @@ module.exports = class Data1699388449731 {
         await db.query(`CREATE INDEX "IDX_e90b25f86612c46b6b70244195" ON "rental_stopped" ("contract") `)
         await db.query(`CREATE INDEX "IDX_157a1b480e0974785b0d53399c" ON "rental_stopped" ("event_name") `)
         await db.query(`CREATE INDEX "IDX_be822c92baa622eb75e2a96d00" ON "rental_stopped" ("seaport_order_hash") `)
-        await db.query(`CREATE INDEX "IDX_ea1ca207644ac464e727327c38" ON "block" ("network") `)
-        await db.query(`CREATE INDEX "IDX_38414873c187a3e0c7943bc4c7" ON "block" ("number") `)
-        await db.query(`CREATE INDEX "IDX_5c67cbcf4960c1a39e5fe25e87" ON "block" ("timestamp") `)
         await db.query(`ALTER TABLE "hook" ADD CONSTRAINT "FK_ac938e0dcb5cf2a3d4c065bf9eb" FOREIGN KEY ("rental_started_id") REFERENCES "rental_started"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
         await db.query(`ALTER TABLE "item" ADD CONSTRAINT "FK_07863c5736eb88aed13930d15b4" FOREIGN KEY ("rental_started_id") REFERENCES "rental_started"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
     }
 
     async down(db) {
-        await db.query(`CREATE INDEX "idx_block_network" ON "block" ("network") `)
-        await db.query(`CREATE INDEX "idx_block_timestamp" ON "block" ("timestamp") `)
+        await db.query(`DROP TABLE "block"`)
+        await db.query(`DROP INDEX "public"."IDX_ea1ca207644ac464e727327c38"`)
+        await db.query(`DROP INDEX "public"."IDX_38414873c187a3e0c7943bc4c7"`)
+        await db.query(`DROP INDEX "public"."IDX_5c67cbcf4960c1a39e5fe25e87"`)
         await db.query(`DROP TABLE "transaction"`)
         await db.query(`DROP INDEX "public"."IDX_05e00879718cfc101c744472ad"`)
         await db.query(`DROP INDEX "public"."IDX_2d99bb5a0ab5fb8cf8b746eb39"`)
@@ -78,9 +79,6 @@ module.exports = class Data1699388449731 {
         await db.query(`DROP INDEX "public"."IDX_e90b25f86612c46b6b70244195"`)
         await db.query(`DROP INDEX "public"."IDX_157a1b480e0974785b0d53399c"`)
         await db.query(`DROP INDEX "public"."IDX_be822c92baa622eb75e2a96d00"`)
-        await db.query(`DROP INDEX "public"."IDX_ea1ca207644ac464e727327c38"`)
-        await db.query(`DROP INDEX "public"."IDX_38414873c187a3e0c7943bc4c7"`)
-        await db.query(`DROP INDEX "public"."IDX_5c67cbcf4960c1a39e5fe25e87"`)
         await db.query(`ALTER TABLE "hook" DROP CONSTRAINT "FK_ac938e0dcb5cf2a3d4c065bf9eb"`)
         await db.query(`ALTER TABLE "item" DROP CONSTRAINT "FK_07863c5736eb88aed13930d15b4"`)
     }
