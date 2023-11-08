@@ -16,27 +16,14 @@ type Transaction @entity {
     status: Int @index
 }
 
-# enum ItemType {
-#     RENTAL,
-#     PAYMENT
-# }
-#
-# enum SettleTo {
-#     LENDER,
-#     RENTER
-# }
-
 # Prefixed with RentalStarted
 # to make it explicit that it is to be used
 # only in context of the RentalStarted entity
 type RentalStartedItem @entity {
   id: ID! @index
   rentalStarted: RentalStarted!
-
-  # itemType: ItemType!
-  # settleTo: SettleTo!
-  itemType: Int!
-  settleTo: Int!
+  itemType: Int! # an enum actually. RENTAL: 0, PAYMENT: 1
+  settleTo: Int! # an enum actually. LENDER: 0, RENTER:  1
   token: String! # address
   amount: BigInt! # uint256
   identifier: BigInt! # uint256
@@ -85,4 +72,19 @@ type RentalStopped @entity {
     eventName: String! @index
 
     seaportOrderHash: String! @index
+    stopper: String! @index
+}
+
+type RentalSafeDeployment @entity {
+    id: ID!
+    network: String! @index
+    blockNumber: Int! @index
+    blockTimestamp: DateTime! @index
+    transactionHash: String! @index
+    contract: String! @index
+    eventName: String! @index
+
+    safe: String! @index # address
+    owners: [String!]! # address[]
+    threshold: BigInt! # uint256
 }

@@ -1,8 +1,9 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_} from "typeorm"
+import * as marshal from "./marshal"
 
 @Entity_()
-export class RentalStopped {
-    constructor(props?: Partial<RentalStopped>) {
+export class RentalSafeDeployment {
+    constructor(props?: Partial<RentalSafeDeployment>) {
         Object.assign(this, props)
     }
 
@@ -35,9 +36,11 @@ export class RentalStopped {
 
     @Index_()
     @Column_("text", {nullable: false})
-    seaportOrderHash!: string
+    safe!: string
 
-    @Index_()
-    @Column_("text", {nullable: false})
-    stopper!: string
+    @Column_("text", {array: true, nullable: false})
+    owners!: (string)[]
+
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    threshold!: bigint
 }

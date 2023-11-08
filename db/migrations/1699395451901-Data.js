@@ -121,6 +121,7 @@ CREATE TABLE "rental_stopped" (
     "contract" text NOT NULL,
     "event_name" text NOT NULL,
     "seaport_order_hash" text NOT NULL,
+    "stopper" text NOT NULL,
     CONSTRAINT "rental_stopped_pkey" PRIMARY KEY ("id")
 )
 `);
@@ -130,6 +131,26 @@ CREATE TABLE "rental_stopped" (
     await db.query(`CREATE INDEX "idx_rental_stopped_transaction_hash" ON "rental_stopped" ("transaction_hash")`);
     await db.query(`CREATE INDEX "idx_rental_stopped_contract" ON "rental_stopped" ("contract")`);
     await db.query(`CREATE INDEX "idx_rental_stopped_seaport_order_hash" ON "rental_stopped" ("seaport_order_hash")`);
+
+    // ============================
+    // RENTAL SAFE DEPLOYMENT
+    // ============================
+
+    await db.query(`
+CREATE TABLE "rental_safe_deployment" (
+    "id" varchar NOT NULL,
+    "network" text NOT NULL,
+    "block_number" integer NOT NULL,
+    "block_timestamp" TIMESTAMP WITH TIME ZONE NOT NULL,
+    "transaction_hash" text NOT NULL,
+    "contract" text NOT NULL,
+    "event_name" text NOT NULL,
+    "safe" text NOT NULL,
+    "owners" text[] NOT NULL,
+    "threshold" numeric NOT NULL, 
+    CONSTRAINT "rental_safe_deployment_pkey" PRIMARY KEY ("id")
+)
+`)
 
     // ============================
     // FOREIGN KEYS
@@ -146,5 +167,6 @@ CREATE TABLE "rental_stopped" (
     await db.query(`DROP TABLE "rental_started"`);
     await db.query(`DROP TABLE "item"`);
     await db.query(`DROP TABLE "rental_stopped"`);
+    await db.query(`DROP TABLE "rental_safe_deployment"`);
   }
 };

@@ -1,10 +1,10 @@
 import { type DataHandlerContext, type Log } from "@subsquid/evm-processor";
 
-import * as spec from "../abi/stop";
+import * as spec from "../abi/factory";
 import { type Fields, type NETWORK } from "../consts";
 import { type Store } from "../db";
 import { EntityBuffer } from "../entityBuffer";
-import { RentalStopped } from "../model";
+import { RentalSafeDeployment } from "../model";
 
 export function parseEvent(
   ctx: DataHandlerContext<Store>,
@@ -13,20 +13,22 @@ export function parseEvent(
 ): void {
   try {
     switch (log.topics[0]) {
-      case spec.events.RentalOrderStopped.topic: {
-        const e = spec.events.RentalOrderStopped.decode(log);
+      case spec.events.RentalSafeDeployment.topic: {
+        const [safe, owners, threshold] = spec.events.RentalSafeDeployment
+          .decode(log);
         EntityBuffer.add(
-          new RentalStopped({
+          new RentalSafeDeployment({
             id: log.id,
             network: chain,
             blockNumber: log.block.height,
             blockTimestamp: new Date(log.block.timestamp),
             transactionHash: log.transactionHash,
             contract: log.address,
-            eventName: "RentalOrderStopped",
+            eventName: "RentalSafeDeployment",
 
-            seaportOrderHash: e[0],
-            stopper: e[1],
+            safe,
+            owners,
+            threshold,
           }),
         );
         break;

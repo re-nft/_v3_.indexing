@@ -5,8 +5,8 @@ import {ABI_JSON} from './stop.abi'
 export const abi = new ethers.Interface(ABI_JSON);
 
 export const events = {
-    RentalOrderStopped: new LogEvent<([seaportOrderHash: string] & {seaportOrderHash: string})>(
-        abi, '0xb12d31c25b42c451447da237994ff0ac4e6cba44803b2959016ab3f36d34c010'
+    RentalOrderStopped: new LogEvent<([seaportOrderHash: string, stopper: string] & {seaportOrderHash: string, stopper: string})>(
+        abi, '0x93ec3857013e8ed6a6948c31a37c12a335c730d3f5894c07c4474b4fe755c487'
     ),
 }
 
@@ -37,6 +37,12 @@ export const functions = {
     ),
     setActiveStatus: new Func<[activate_: boolean], {activate_: boolean}, []>(
         abi, '0xec7404b1'
+    ),
+    setFee: new Func<[feeNumerator: bigint], {feeNumerator: bigint}, []>(
+        abi, '0x69fe0e2d'
+    ),
+    skim: new Func<[token: string, to: string], {token: string, to: string}, []>(
+        abi, '0x712b772f'
     ),
     stopRent: new Func<[order: ([seaportOrderHash: string, items: Array<([itemType: number, settleTo: number, token: string, amount: bigint, identifier: bigint] & {itemType: number, settleTo: number, token: string, amount: bigint, identifier: bigint})>, hooks: Array<([target: string, itemIndex: bigint, extraData: string] & {target: string, itemIndex: bigint, extraData: string})>, orderType: number, lender: string, renter: string, rentalWallet: string, startTimestamp: bigint, endTimestamp: bigint] & {seaportOrderHash: string, items: Array<([itemType: number, settleTo: number, token: string, amount: bigint, identifier: bigint] & {itemType: number, settleTo: number, token: string, amount: bigint, identifier: bigint})>, hooks: Array<([target: string, itemIndex: bigint, extraData: string] & {target: string, itemIndex: bigint, extraData: string})>, orderType: number, lender: string, renter: string, rentalWallet: string, startTimestamp: bigint, endTimestamp: bigint})], {order: ([seaportOrderHash: string, items: Array<([itemType: number, settleTo: number, token: string, amount: bigint, identifier: bigint] & {itemType: number, settleTo: number, token: string, amount: bigint, identifier: bigint})>, hooks: Array<([target: string, itemIndex: bigint, extraData: string] & {target: string, itemIndex: bigint, extraData: string})>, orderType: number, lender: string, renter: string, rentalWallet: string, startTimestamp: bigint, endTimestamp: bigint] & {seaportOrderHash: string, items: Array<([itemType: number, settleTo: number, token: string, amount: bigint, identifier: bigint] & {itemType: number, settleTo: number, token: string, amount: bigint, identifier: bigint})>, hooks: Array<([target: string, itemIndex: bigint, extraData: string] & {target: string, itemIndex: bigint, extraData: string})>, orderType: number, lender: string, renter: string, rentalWallet: string, startTimestamp: bigint, endTimestamp: bigint})}, []>(
         abi, '0xf1c9e188'

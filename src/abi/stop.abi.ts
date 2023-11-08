@@ -31,6 +31,80 @@ export const ABI_JSON = [
         ]
     },
     {
+        "type": "error",
+        "name": "Policy_OnlyRole",
+        "inputs": [
+            {
+                "type": "bytes32",
+                "name": "role_"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "ReclaimerPackage_OnlyDelegateCallAllowed",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "ReclaimerPackage_OnlyRentalSafeAllowed",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "reclaimer"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "Shared_DisabledHook",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "hook"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "Shared_NonRentalHookItem",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "itemIndex"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "Shared_OrderTypeNotSupported",
+        "inputs": [
+            {
+                "type": "uint8",
+                "name": "orderType"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "StopPolicy_CannotStopOrder",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "timestamp"
+            },
+            {
+                "type": "address",
+                "name": "stopper"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "StopPolicy_ReclaimFailed",
+        "inputs": []
+    },
+    {
         "type": "event",
         "anonymous": false,
         "name": "RentalOrderStopped",
@@ -38,6 +112,11 @@ export const ABI_JSON = [
             {
                 "type": "bytes32",
                 "name": "seaportOrderHash",
+                "indexed": false
+            },
+            {
+                "type": "address",
+                "name": "stopper",
                 "indexed": false
             }
         ]
@@ -240,6 +319,36 @@ export const ABI_JSON = [
             {
                 "type": "bool",
                 "name": "activate_"
+            }
+        ],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "setFee",
+        "constant": false,
+        "payable": false,
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "feeNumerator"
+            }
+        ],
+        "outputs": []
+    },
+    {
+        "type": "function",
+        "name": "skim",
+        "constant": false,
+        "payable": false,
+        "inputs": [
+            {
+                "type": "address",
+                "name": "token"
+            },
+            {
+                "type": "address",
+                "name": "to"
             }
         ],
         "outputs": []

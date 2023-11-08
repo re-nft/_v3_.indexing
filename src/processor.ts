@@ -6,9 +6,10 @@ import {
 
 import * as createAbi from "./abi/create";
 import * as stopAbi from "./abi/stop";
+import * as factoryAbi from "./abi/factory";
 import * as consts from "./consts";
 import { EntityBuffer } from "./entityBuffer";
-import { create, stop } from "./mapping";
+import { create, stop, factory } from "./mapping";
 import { Block } from "./model";
 
 // ! there is no clean way to do this
@@ -25,6 +26,7 @@ export interface EvmIndexerOptions {
   network: consts.NETWORK;
   createAddress: string;
   stopAddress: string;
+  factoryAddress: string;
   source: DataSource;
   startBlock: number;
   endBlock?: number;
@@ -36,6 +38,7 @@ export function start({
   network,
   createAddress: rawCreateAddress,
   stopAddress: rawStopAddress,
+  factoryAddress: rawFactoryAddress,
   source,
   startBlock,
   endBlock,
@@ -43,6 +46,7 @@ export function start({
   // ! super critical to lower case the addresses, otherwise it won't index
   const createAddress = rawCreateAddress.toLowerCase();
   const stopAddress = rawStopAddress.toLowerCase();
+  const factoryAddress = rawFactoryAddress.toLowerCase();
 
   const processor = new EvmBatchProcessor()
     .setDataSource(source)
@@ -57,11 +61,17 @@ export function start({
       address: [stopAddress],
       topic0: [stopAbi.events.RentalOrderStopped.topic],
       range: { from: startBlock, to: endBlock },
+    })
+    .addLog({
+      address: [factoryAddress],
+      topic0: [factoryAbi.events.RentalSafeDeployment.topic],
+      range: { from: startBlock, to: endBlock },
     });
 
   const logParsers = {
     [createAddress]: create.parseEvent,
     [stopAddress]: stop.parseEvent,
+    [factoryAddress]: factory.parseEvent,
   };
 
   processor.run(
