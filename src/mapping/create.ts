@@ -47,9 +47,7 @@ export function parseEvent(
         // to enums, below line will give you a type error
         rentalStarted.items = items;
         rentalStarted.hooks = hooks;
-        EntityBuffer.add(
-          rentalStarted,
-        );
+        EntityBuffer.add(rentalStarted);
         break;
       }
     }

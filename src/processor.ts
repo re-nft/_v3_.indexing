@@ -55,9 +55,7 @@ export function start({
     })
     .addLog({
       address: [stopAddress],
-      topic0: [
-        stopAbi.events.RentalOrderStopped.topic,
-      ],
+      topic0: [stopAbi.events.RentalOrderStopped.topic],
       range: { from: startBlock, to: endBlock },
     });
 
