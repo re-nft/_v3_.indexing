@@ -1,5 +1,4 @@
 import { type DataHandlerContext, type Log } from "@subsquid/evm-processor";
-import { randomUUID } from "crypto";
 
 import * as spec from "../abi/create";
 import { type Fields, type NETWORK } from "../consts";
@@ -46,9 +45,9 @@ export function parseEvent(
         });
 
         rentalStarted.items = items.map(
-          ([itemType, settleTo, token, amount, identifier]) =>
+          ([itemType, settleTo, token, amount, identifier], index) =>
             new Item({
-              id: randomUUID(),
+              id: `${log.id}::${index}`,
               amount,
               identifier,
               itemType,
@@ -59,9 +58,9 @@ export function parseEvent(
         );
         // Unsure whether this struct is has the right model
         rentalStarted.hooks = hooks.map(
-          ([target, itemIndex, extraData]) =>
+          ([target, itemIndex, extraData], index) =>
             new Hook({
-              id: randomUUID(),
+              id: `${log.id}::${index}`,
               extraData,
               itemIndex,
               target,
