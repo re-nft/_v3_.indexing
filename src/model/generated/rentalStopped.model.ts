@@ -1,9 +1,8 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_} from "typeorm"
-import * as marshal from "./marshal"
 
 @Entity_()
-export class RentalFactoryEventRentalSafeDeployment {
-    constructor(props?: Partial<RentalFactoryEventRentalSafeDeployment>) {
+export class RentalStopped {
+    constructor(props?: Partial<RentalStopped>) {
         Object.assign(this, props)
     }
 
@@ -34,18 +33,11 @@ export class RentalFactoryEventRentalSafeDeployment {
     @Column_("text", {nullable: false})
     eventName!: string
 
+    @Index_()
     @Column_("text", {nullable: false})
-    safe!: string
+    seaportOrderHash!: string
 
+    @Index_()
     @Column_("text", {nullable: false})
-    rentalManager!: string
-
-    @Column_("text", {nullable: false})
-    guard!: string
-
-    @Column_("text", {nullable: false})
-    owner!: string
-
-    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    nonce!: bigint
+    stopper!: string
 }

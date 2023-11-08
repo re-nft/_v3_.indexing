@@ -1,9 +1,11 @@
-import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_} from "typeorm"
+import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_, OneToMany as OneToMany_} from "typeorm"
 import * as marshal from "./marshal"
+import {RentalStartedItem} from "./rentalStartedItem.model"
+import {RentalStartedHook} from "./rentalStartedHook.model"
 
 @Entity_()
-export class RentalManagerEventRentalStopped {
-    constructor(props?: Partial<RentalManagerEventRentalStopped>) {
+export class RentalStarted {
+    constructor(props?: Partial<RentalStarted>) {
         Object.assign(this, props)
     }
 
@@ -36,22 +38,33 @@ export class RentalManagerEventRentalStopped {
 
     @Index_()
     @Column_("text", {nullable: false})
-    seaportOrderHash!: string
+    orderHash!: string
+
+    @Column_("text", {nullable: false})
+    emittedExtraData!: string
 
     @Index_()
     @Column_("text", {nullable: false})
-    renterWallet!: string
+    seaportOrderHash!: string
+
+    @OneToMany_(() => RentalStartedItem, e => e.rentalStarted)
+    items!: RentalStartedItem[]
+
+    @OneToMany_(() => RentalStartedHook, e => e.rentalStarted)
+    hooks!: RentalStartedHook[]
 
     @Index_()
     @Column_("text", {nullable: false})
     lender!: string
 
+    @Index_()
     @Column_("text", {nullable: false})
-    collection!: string
+    renter!: string
+
+    @Index_()
+    @Column_("text", {nullable: false})
+    rentalWallet!: string
 
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
-    tokenId!: bigint
-
-    @Column_("text", {nullable: false})
-    stopper!: string
+    endTimestamp!: bigint
 }
