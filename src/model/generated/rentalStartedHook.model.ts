@@ -3,8 +3,8 @@ import * as marshal from "./marshal"
 import {RentalStarted} from "./rentalStarted.model"
 
 @Entity_()
-export class Hook {
-    constructor(props?: Partial<Hook>) {
+export class RentalStartedHook {
+    constructor(props?: Partial<RentalStartedHook>) {
         Object.assign(this, props)
     }
 

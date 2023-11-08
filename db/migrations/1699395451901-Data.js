@@ -45,7 +45,7 @@ CREATE TABLE "transaction" (
     // HOOK TABLE
     // ============================
     await db.query(`
-CREATE TABLE "hook" (
+CREATE TABLE "rental_started_hook" (
     "id" varchar NOT NULL,
     "target" text NOT NULL,
     "item_index" numeric NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE "hook" (
 )
 `);
 
-    await db.query(`CREATE INDEX "idx_hook_rental_started_id" ON "hook" ("rental_started_id")`);
+    await db.query(`CREATE INDEX "idx_rental_started_hook_rental_started_id" ON "rental_started_hook" ("rental_started_id")`);
 
     // ============================
     // RENTAL STARTED TABLE
@@ -94,7 +94,7 @@ CREATE TABLE "rental_started" (
     // ITEM TABLE
     // ============================
     await db.query(`
-CREATE TABLE "item" (
+CREATE TABLE "rental_started_item" (
     "id" varchar NOT NULL,
     "item_type" integer NOT NULL,
     "settle_to" integer NOT NULL,
@@ -106,7 +106,7 @@ CREATE TABLE "item" (
 )
 `);
 
-    await db.query(`CREATE INDEX "idx_item_rental_started_id" ON "item" ("rental_started_id")`);
+    await db.query(`CREATE INDEX "idx_rental_started_item_rental_started_id" ON "rental_started_item" ("rental_started_id")`);
 
     // ============================
     // RENTAL STOPPED TABLE
@@ -134,8 +134,8 @@ CREATE TABLE "rental_stopped" (
     // ============================
     // FOREIGN KEYS
     // ============================
-    await db.query(`ALTER TABLE "hook" ADD CONSTRAINT "fk_hook_rental_started" FOREIGN KEY ("rental_started_id") REFERENCES "rental_started"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
-    await db.query(`ALTER TABLE "item" ADD CONSTRAINT "fk_item_rental_started" FOREIGN KEY ("rental_started_id") REFERENCES "rental_started"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+    await db.query(`ALTER TABLE "rental_started_hook" ADD CONSTRAINT "fk_hook_rental_started" FOREIGN KEY ("rental_started_id") REFERENCES "rental_started"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+    await db.query(`ALTER TABLE "rental_started_item" ADD CONSTRAINT "fk_item_rental_started" FOREIGN KEY ("rental_started_id") REFERENCES "rental_started"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
 
   }
 

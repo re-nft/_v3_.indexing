@@ -1,7 +1,7 @@
 import {Entity as Entity_, Column as Column_, PrimaryColumn as PrimaryColumn_, Index as Index_, OneToMany as OneToMany_} from "typeorm"
 import * as marshal from "./marshal"
-import {Item} from "./item.model"
-import {Hook} from "./hook.model"
+import {RentalStartedItem} from "./rentalStartedItem.model"
+import {RentalStartedHook} from "./rentalStartedHook.model"
 
 @Entity_()
 export class RentalStarted {
@@ -47,11 +47,11 @@ export class RentalStarted {
     @Column_("text", {nullable: false})
     seaportOrderHash!: string
 
-    @OneToMany_(() => Item, e => e.rentalStarted)
-    items!: Item[]
+    @OneToMany_(() => RentalStartedItem, e => e.rentalStarted)
+    items!: RentalStartedItem[]
 
-    @OneToMany_(() => Hook, e => e.rentalStarted)
-    hooks!: Hook[]
+    @OneToMany_(() => RentalStartedHook, e => e.rentalStarted)
+    hooks!: RentalStartedHook[]
 
     @Index_()
     @Column_("text", {nullable: false})

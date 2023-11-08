@@ -4,7 +4,7 @@ import * as spec from "../abi/create";
 import { type Fields, type NETWORK } from "../consts";
 import { type Store } from "../db";
 import { EntityBuffer } from "../entityBuffer";
-import { Hook, Item, RentalStarted } from "../model";
+import { RentalStarted, RentalStartedHook, RentalStartedItem } from "../model";
 
 export function parseEvent(
   ctx: DataHandlerContext<Store>,
@@ -46,7 +46,7 @@ export function parseEvent(
 
         rentalStarted.items = items.map(
           ([itemType, settleTo, token, amount, identifier], index) =>
-            new Item({
+            new RentalStartedItem({
               id: `${log.id}::${index}`,
               amount,
               identifier,
@@ -59,7 +59,7 @@ export function parseEvent(
         // Unsure whether this struct is has the right model
         rentalStarted.hooks = hooks.map(
           ([target, itemIndex, extraData], index) =>
-            new Hook({
+            new RentalStartedHook({
               id: `${log.id}::${index}`,
               extraData,
               itemIndex,

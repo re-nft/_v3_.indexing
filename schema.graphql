@@ -26,7 +26,10 @@ type Transaction @entity {
 #     RENTER
 # }
 
-type Item @entity {
+# Prefixed with RentalStarted
+# to make it explicit that it is to be used
+# only in context of the RentalStarted entity
+type RentalStartedItem @entity {
   id: ID! @index
   rentalStarted: RentalStarted!
 
@@ -39,7 +42,11 @@ type Item @entity {
   identifier: BigInt! # uint256
 }
 
-type Hook @entity {
+# Prefixed with RentalStarted
+# to make it explicit that it is to be used
+# only in context of the RentalStarted entity
+# and to avoid collision with the hook table in api
+type RentalStartedHook @entity {
   id: ID! @index
   rentalStarted: RentalStarted!
 
@@ -60,8 +67,8 @@ type RentalStarted @entity {
     orderHash: String! @index # bytes32
     emittedExtraData: String! # bytes
     seaportOrderHash: String! @index # bytes32
-    items: [Item!]! @derivedFrom(field: "rentalStarted")
-    hooks: [Hook!]! @derivedFrom(field: "rentalStarted")
+    items: [RentalStartedItem!]! @derivedFrom(field: "rentalStarted")
+    hooks: [RentalStartedHook!]! @derivedFrom(field: "rentalStarted")
     lender: String! @index # address
     renter: String! @index # address
     rentalWallet: String! @index # address
