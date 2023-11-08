@@ -1,11 +1,11 @@
 import { type DataHandlerContext, type Log } from "@subsquid/evm-processor";
+import { randomUUID } from "crypto";
 
 import * as spec from "../abi/create";
 import { type Fields, type NETWORK } from "../consts";
 import { type Store } from "../db";
 import { EntityBuffer } from "../entityBuffer";
-import { RentalStarted } from "../model";
-import { randomUUID } from "crypto";
+import { Hook, Item, RentalStarted } from "../model";
 
 export function parseEvent(
   ctx: DataHandlerContext<Store>,
@@ -15,8 +15,19 @@ export function parseEvent(
   try {
     switch (log.topics[0]) {
       case spec.events.RentalOrderStarted.topic: {
-        const e = spec.events.RentalOrderStarted.decode(log);
-        let rentalStarted = new RentalStarted({
+        const [
+          orderHash,
+          emittedExtraData,
+          seaportOrderHash,
+          items,
+          hooks,
+          lender,
+          renter,
+          rentalWallet,
+          endTimestamp,
+        ] = spec.events.RentalOrderStarted.decode(log);
+
+        const rentalStarted = new RentalStarted({
           id: log.id,
           network: chain,
           blockNumber: log.block.height,
@@ -25,29 +36,45 @@ export function parseEvent(
           contract: log.address,
           eventName: "RentalOrderStarted",
 
-          orderHash: e[0],
-          emittedExtraData: e[1],
-          seaportOrderHash: e[2],
-          lender: e[5],
-          renter: e[6],
-          rentalWallet: e[7],
-          endTimestamp: e[8],
+          orderHash,
+          emittedExtraData,
+          seaportOrderHash,
+          lender,
+          renter,
+          rentalWallet,
+          endTimestamp,
         });
-        const items = e[3].map((item) => ({
-          ...item,
-          id: randomUUID(),
-          rentalStarted: rentalStarted,
-        }));
-        const hooks = e[4].map((item) => ({
-          ...item,
-          id: randomUUID(),
-          rentalStarted: rentalStarted,
-        }));
-        // if you change itemType and settleTo fields in schema.graphql
-        // to enums, below line will give you a type error
-        rentalStarted.items = items;
-        rentalStarted.hooks = hooks;
-        EntityBuffer.add(rentalStarted);
+
+        rentalStarted.items = items.map(
+          ([itemType, settleTo, token, amount, identifier]) =>
+            new Item({
+              id: randomUUID(),
+              amount,
+              identifier,
+              itemType,
+              rentalStarted,
+              settleTo,
+              token,
+            }),
+        );
+        // Unsure whether this struct is has the right model
+        rentalStarted.hooks = hooks.map(
+          ([target, itemIndex, extraData]) =>
+            new Hook({
+              id: randomUUID(),
+              extraData,
+              itemIndex,
+              target,
+              rentalStarted,
+            }),
+        );
+
+        [rentalStarted, ...rentalStarted.items, ...rentalStarted.hooks].forEach(
+          (entity) => {
+            EntityBuffer.add(entity);
+          },
+        );
+
         break;
       }
     }
