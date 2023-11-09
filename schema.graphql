@@ -56,9 +56,11 @@ type RentalStarted @entity {
     seaportOrderHash: String! @index # bytes32
     items: [RentalStartedItem!]! @derivedFrom(field: "rentalStarted")
     hooks: [RentalStartedHook!]! @derivedFrom(field: "rentalStarted")
+    orderType: Int! # OrderType
     lender: String! @index # address
     renter: String! @index # address
     rentalWallet: String! @index # address
+    startTimestamp: BigInt! # uint256
     endTimestamp: BigInt! # uint256
 }
 

@@ -20,9 +20,11 @@ export function parseEvent(
           seaportOrderHash,
           items,
           hooks,
+          orderType,
           lender,
           renter,
           rentalWallet,
+          startTimestamp,
           endTimestamp,
         ] = spec.events.RentalOrderStarted.decode(log);
 
@@ -38,9 +40,11 @@ export function parseEvent(
           orderHash: orderHash.toLowerCase(),
           emittedExtraData: emittedExtraData.toLowerCase(),
           seaportOrderHash: seaportOrderHash.toLowerCase(),
+          orderType,
           lender: lender.toLowerCase(),
           renter: renter.toLowerCase(),
           rentalWallet: rentalWallet.toLowerCase(),
+          startTimestamp,
           endTimestamp,
         });
 

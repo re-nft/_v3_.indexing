@@ -72,9 +72,11 @@ CREATE TABLE "rental_started" (
     "order_hash" text NOT NULL,
     "emitted_extra_data" text NOT NULL,
     "seaport_order_hash" text NOT NULL,
+    "order_type" numeric NOT NULL,
     "lender" text NOT NULL,
     "renter" text NOT NULL,
     "rental_wallet" text NOT NULL,
+    "start_timestamp" numeric NOT NULL,
     "end_timestamp" numeric NOT NULL,
     CONSTRAINT "rental_started_pkey" PRIMARY KEY ("id")
 )
