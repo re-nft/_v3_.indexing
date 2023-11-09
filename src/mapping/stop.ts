@@ -14,7 +14,9 @@ export function parseEvent(
   try {
     switch (log.topics[0]) {
       case spec.events.RentalOrderStopped.topic: {
-        const e = spec.events.RentalOrderStopped.decode(log);
+        let [seaportOrderHash, stopper] = spec.events.RentalOrderStopped.decode(
+          log,
+        );
         EntityBuffer.add(
           new RentalStopped({
             id: log.id,
@@ -25,8 +27,8 @@ export function parseEvent(
             contract: log.address,
             eventName: "RentalOrderStopped",
 
-            seaportOrderHash: e[0],
-            stopper: e[1],
+            seaportOrderHash: seaportOrderHash.toLowerCase(),
+            stopper: stopper.toLowerCase(),
           }),
         );
         break;

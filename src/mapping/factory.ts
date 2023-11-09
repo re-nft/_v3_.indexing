@@ -26,8 +26,8 @@ export function parseEvent(
             contract: log.address,
             eventName: "RentalSafeDeployment",
 
-            safe,
-            owners,
+            safe: safe.toLowerCase(),
+            owners: owners.map((owner) => (owner.toLowerCase())),
             threshold,
           }),
         );

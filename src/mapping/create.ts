@@ -14,7 +14,7 @@ export function parseEvent(
   try {
     switch (log.topics[0]) {
       case spec.events.RentalOrderStarted.topic: {
-        const [
+        let [
           orderHash,
           emittedExtraData,
           seaportOrderHash,
@@ -35,12 +35,12 @@ export function parseEvent(
           contract: log.address,
           eventName: "RentalOrderStarted",
 
-          orderHash,
-          emittedExtraData,
-          seaportOrderHash,
-          lender,
-          renter,
-          rentalWallet,
+          orderHash: orderHash.toLowerCase(),
+          emittedExtraData: emittedExtraData.toLowerCase(),
+          seaportOrderHash: seaportOrderHash.toLowerCase(),
+          lender: lender.toLowerCase(),
+          renter: renter.toLowerCase(),
+          rentalWallet: rentalWallet.toLowerCase(),
           endTimestamp,
         });
 
@@ -53,7 +53,7 @@ export function parseEvent(
               itemType,
               rentalStarted,
               settleTo,
-              token,
+              token: token.toLowerCase(),
             }),
         );
         // Unsure whether this struct is has the right model
@@ -61,9 +61,9 @@ export function parseEvent(
           ([target, itemIndex, extraData], index) =>
             new RentalStartedHook({
               id: `${log.id}::${index}`,
-              extraData,
+              extraData: extraData.toLowerCase(),
               itemIndex,
-              target,
+              target: target.toLowerCase(),
               rentalStarted,
             }),
         );
