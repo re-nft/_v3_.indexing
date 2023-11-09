@@ -12,6 +12,119 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
+        "name": "CreatePolicy_ConsiderationCountNonZero",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "considerationCount"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "CreatePolicy_ConsiderationCountZero",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "CreatePolicy_InvalidOrderMetadataHash",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "CreatePolicy_InvalidRentalSafe",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "safe"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "CreatePolicy_InvalidSafeOwner",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "owner"
+            },
+            {
+                "type": "address",
+                "name": "safe"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "CreatePolicy_ItemCountZero",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "totalRentals"
+            },
+            {
+                "type": "uint256",
+                "name": "totalPayments"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "CreatePolicy_ItemTypeNotSupported",
+        "inputs": [
+            {
+                "type": "uint8",
+                "name": "itemType"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "CreatePolicy_OfferCountNonZero",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "offerCount"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "CreatePolicy_OfferCountZero",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "CreatePolicy_RentDurationZero",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "CreatePolicy_UnauthorizedCreatePolicySigner",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "CreatePolicy_UnexpectedERC721Owner",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "currentOwner"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "CreatePolicy_UnexpectedPaymentEscrowRecipient",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "paymentRecipient"
+            }
+        ]
+    },
+    {
+        "type": "error",
         "name": "ECDSAInvalidSignature",
         "inputs": []
     },
@@ -37,11 +150,6 @@ export const ABI_JSON = [
     },
     {
         "type": "error",
-        "name": "ItemTypeNotSupported",
-        "inputs": []
-    },
-    {
-        "type": "error",
         "name": "KernelAdapter_OnlyKernel",
         "inputs": [
             {
@@ -49,11 +157,6 @@ export const ABI_JSON = [
                 "name": "caller_"
             }
         ]
-    },
-    {
-        "type": "error",
-        "name": "OrderTypeNotSupported",
-        "inputs": []
     },
     {
         "type": "error",
@@ -72,6 +175,84 @@ export const ABI_JSON = [
             {
                 "type": "bytes32",
                 "name": "role_"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "Shared_DisabledHook",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "hook"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "Shared_HookFailBytes",
+        "inputs": [
+            {
+                "type": "bytes",
+                "name": "revertData"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "Shared_HookFailString",
+        "inputs": [
+            {
+                "type": "string",
+                "name": "revertReason"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "Shared_NonRentalHookItem",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "itemIndex"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "Shared_OrderTypeNotSupported",
+        "inputs": [
+            {
+                "type": "uint8",
+                "name": "orderType"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "SignerPackage_SignatureExpired",
+        "inputs": [
+            {
+                "type": "uint256",
+                "name": "currentTimestamp"
+            },
+            {
+                "type": "uint256",
+                "name": "expiredAt"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "SignerPackage_UnauthorizedFulfiller",
+        "inputs": [
+            {
+                "type": "address",
+                "name": "unauthorized"
+            },
+            {
+                "type": "address",
+                "name": "expected"
             }
         ]
     },
@@ -140,6 +321,11 @@ export const ABI_JSON = [
                 "name": "hooks"
             },
             {
+                "type": "uint8",
+                "name": "orderType",
+                "indexed": false
+            },
+            {
                 "type": "address",
                 "name": "lender",
                 "indexed": true
@@ -152,6 +338,11 @@ export const ABI_JSON = [
             {
                 "type": "address",
                 "name": "rentalWallet",
+                "indexed": false
+            },
+            {
+                "type": "uint256",
+                "name": "startTimestamp",
                 "indexed": false
             },
             {

@@ -53,6 +53,9 @@ export class RentalStarted {
     @OneToMany_(() => RentalStartedHook, e => e.rentalStarted)
     hooks!: RentalStartedHook[]
 
+    @Column_("int4", {nullable: false})
+    orderType!: number
+
     @Index_()
     @Column_("text", {nullable: false})
     lender!: string
@@ -64,6 +67,9 @@ export class RentalStarted {
     @Index_()
     @Column_("text", {nullable: false})
     rentalWallet!: string
+
+    @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
+    startTimestamp!: bigint
 
     @Column_("numeric", {transformer: marshal.bigintTransformer, nullable: false})
     endTimestamp!: bigint
