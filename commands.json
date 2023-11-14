@@ -67,15 +67,6 @@
         "lib/processors/eth-sepolia.js"
       ]
     },
-    "process:eth-sepolia-fork:archive": {
-      "description": "Load .env and start the ETH-SEPOLIA-FORK squid archive processor",
-      "deps": ["build", "migration:apply"],
-      "cmd": [
-        "node",
-        "--require=dotenv/config",
-        "lib/processors/eth-sepolia-fork/archive.js"
-      ]
-    },
     "process:eth-sepolia-fork:chain": {
       "description": "Load .env and start the ETH-SEPOLIA-FORK squid chain processor",
       "deps": ["build", "migration:apply"],
@@ -90,7 +81,6 @@
       "deps": [
         "build",
         "migration:apply",
-        "process:eth-sepolia-fork:archive",
         "process:eth-sepolia-fork:chain"
       ]
     },
