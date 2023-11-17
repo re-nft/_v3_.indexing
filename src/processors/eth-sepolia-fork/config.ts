@@ -3,17 +3,19 @@ import { type EvmIndexerOptions } from "../../processor";
 
 export const config: EvmIndexerOptions = {
   dbOptions: { stateSchema: "eth_sepolia_fork_processor" },
-  finalityConfirmation: 1,
+  // DO NOT CHANGE THIS TO ANY OTHER NUMBER
+  // YOUR FORK INDEXING WILL BECOME FLAKY AND WILL NOT WORK
+  finalityConfirmation: 0,
   network: NETWORK.ETH_SEPOLIA_FORK,
-  createAddress: "0xAdfFEd1E9D37c640D8490A4F7e34EC82170B4D40",
-  stopAddress: "0x490A8fA35ff1cBa261593ecE604282Ff6fb9737b",
-  factoryAddress: "0x112b10c90494a3ba47FBD0076e99d8e924378661",
+  createAddress: "0xc60f6eb59002a4F71A3e34d2C5Bf9c244D42BD68",
+  stopAddress: "0xa95BC23c95e62Dd0a9dc85790e45423C98069546",
+  factoryAddress: "0xdab133e1E2B1610deb14419715Dcce7261C17293",
   source: {
     chain: process.env.RPC_ETH_SEPOLIA_FORK_HTTP ?? "http://127.0.0.1:8545",
   },
-  // TODO: don't need to break up indexing into two parts
-  // unless you really need to index testnet data
-  // which you don't need to
-  // block number where both rental factory and rental manager were deployed
-  startBlock: 4654687,
+  // if you fork anvil at block number x, then startBlock here must be x + 1
+  // otherwise you will get an error like:
+  //
+  // "Seems like the chain node navigated to another branch while we were fetching block x"
+  startBlock: 4661045,
 };
