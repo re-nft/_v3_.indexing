@@ -14,9 +14,9 @@ deploy:
 
   processor:
     - name: eth-sepolia-processor
-      cmd: ["node", "lib/processors/eth-sepolia/main"]
+      cmd: ["node", "lib/processors/eth-sepolia.js"]
     - name: polygon-mumbai-processor
-      cmd: ["node", "lib/processors/polygon-mumbai/main"]
+      cmd: ["node", "lib/processors/polygon-mumbai.js"]
 
 scale:
   dedicated: true
