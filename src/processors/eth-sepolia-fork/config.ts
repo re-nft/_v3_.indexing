@@ -17,5 +17,6 @@ export const config: EvmIndexerOptions = {
   // otherwise you will get an error like:
   //
   // "Seems like the chain node navigated to another branch while we were fetching block x"
-  startBlock: 4661045,
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing, @typescript-eslint/strict-boolean-expressions
+  startBlock: Number(process.env.FORK_BLOCK_NUMBER || 4661045) + 1,
 };
