@@ -16,6 +16,7 @@ export function parseEvent(
       case spec.events.RentalSafeDeployment.topic: {
         const [safe, owners, threshold] = spec.events.RentalSafeDeployment
           .decode(log);
+        console.log(`safe deployment indexed. safe: ${safe}, threshold: ${threshold}`);
         EntityBuffer.add(
           new RentalSafeDeployment({
             id: log.id,
