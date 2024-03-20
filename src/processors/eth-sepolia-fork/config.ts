@@ -7,9 +7,9 @@ export const config: EvmIndexerOptions = {
   // YOUR FORK INDEXING WILL BECOME FLAKY AND WILL NOT WORK
   finalityConfirmation: 0,
   network: NETWORK.ETH_SEPOLIA_FORK,
-  createAddress: "0xc60f6eb59002a4F71A3e34d2C5Bf9c244D42BD68",
-  stopAddress: "0xa95BC23c95e62Dd0a9dc85790e45423C98069546",
-  factoryAddress: "0xdab133e1E2B1610deb14419715Dcce7261C17293",
+  createAddress: "0xced95c21500c0ffb977f9a8a9b656164a41630c1",
+  stopAddress: "0x013c420fbb9bfa135f8fcecfbcfa70a577f0b4fa",
+  factoryAddress: "0xe06aed5d2f5c2624ded4a6413e67cd7caf7bb3ac",
   source: {
     chain: process.env.RPC_ETH_SEPOLIA_FORK_HTTP ?? "http://127.0.0.1:8545",
   },
@@ -17,5 +17,5 @@ export const config: EvmIndexerOptions = {
   // otherwise you will get an error like:
   //
   // "Seems like the chain node navigated to another branch while we were fetching block x"
-  startBlock: 4661045,
+  startBlock: 5511921,
 };
