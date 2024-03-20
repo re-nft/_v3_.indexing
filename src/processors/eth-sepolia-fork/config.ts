@@ -17,5 +17,5 @@ export const config: EvmIndexerOptions = {
   // otherwise you will get an error like:
   //
   // "Seems like the chain node navigated to another branch while we were fetching block x"
-  startBlock: 5511921,
+  startBlock: 5519694,
 };

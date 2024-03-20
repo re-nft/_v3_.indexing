@@ -38,6 +38,6 @@ start({
     chain: process.env.RPC_ETH_SEPOLIA_HTTP,
   },
   // block number where both rental factory and rental manager were deployed
-  startBlock: 5511921,
+  startBlock: 5519694,
   endBlock
 });
