@@ -18,7 +18,7 @@ Note, that by default, it will generate indices for all the columns on the table
 
 Right now it's quite hacky to run the migrations when you are using external db.
 
-We have switched off squid from running migrations itself (you cannot set `DB_NAME`, `DB_USER`, etc. when deploying to aquarium). Therefore, it is your responsibility, to manually run migrations before you deploy. To do so, set correctly (**notice there is no `V3_` prefix!**):
+We have switched off squid from running migrations itself (you cannot set `DB_NAME`, `DB_USER`, etc. when deploying to squid's cloud). Therefore, it is your responsibility, to manually run migrations before you deploy. To do so, set correctly (**notice there is no `V3_` prefix!**):
 
 - `DB_HOST`
 - `DB_NAME`
@@ -65,7 +65,17 @@ To have subsquid write to your own database locally, utilise the following envir
 - `V3_DB_USER`
 - `PGSSLMODE=true` (you only need this if you are writing to externally hosted db from local terminal)
 
-To have hosted aquarium service pick up our external db, we need to re-define `DB_HOST`, `DB_PORT`, `DB_NAME` and `DB_USER` to point to the above. That is what you see before processors gets initialised in this codebase.
+To have hosted squid service pick up our external db, we need to re-define `DB_HOST`, `DB_PORT`, `DB_NAME` and `DB_USER` to point to the above. That is what you see before processors gets initialised in this codebase.
+
+## Good To Know
+
+To deploy, re-deploy squid, just run
+
+```bash
+sqd deploy .
+```
+
+make sure your `sqd` is `@ 2.7.0`
 
 ### Prod Checklist
 
