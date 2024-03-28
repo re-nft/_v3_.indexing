@@ -6,11 +6,11 @@ build:
 deploy:
   addons:
     rpc:
-      - eth-mainnet:http
+      - eth:http
       - eth-sepolia:http
       - polygon:http
       - polygon-testnet:http
-  secrets: ["V3_DB_NAME", "V3_DB_HOST", "V3_DB_USER", "V3_DB_PASS", "V3_DB_SSL", "DB_SSL", "PGSSLMODE"]
+  secrets: ["V3_DB_NAME", "V3_DB_HOST", "V3_DB_USER", "V3_DB_PASS", "V3_DB_SSL", "DB_SSL", "PGSSLMODE", "RPC_ETH_MAINNET_HTTP", "RPC_POLYGON_MAINNET_HTTP", "RPC_ETH_SEPOLIA_HTTP", "RPC_POLYGON_MUMBAI_HTTP"]
   migrate:
     cmd: ["echo"]
 
