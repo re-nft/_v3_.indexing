@@ -14,7 +14,7 @@ if (!process.env.RPC_ETH_MAINNET_HTTP) {
 start({
   dbOptions: { stateSchema: "eth_mainnet_processor" },
   // https://etherscan.io/blocks_forked?p=1
-  finalityConfirmation: 2,
+  finalityConfirmation: 75,
   network: NETWORK.ETH_MAINNET,
   createAddress: "0x37B45F0810a0A0fc70B08Eed205cc07E57bD6452",
   stopAddress: "0xFfcF66DE71f13a4823334917A4D5a22302854D3A",

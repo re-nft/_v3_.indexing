@@ -77,6 +77,41 @@ sqd deploy .
 
 make sure your `sqd` is `@ 2.7.0`
 
+## Gotchas
+
+You can corrupt your processor's state by setting finality too low.
+
+We had polygon mainnet processor corrupt the state with finality 20 and re-org: 17 blocks.
+
+If your subsquid indexed data is not in the same db as your other data, then easiest
+solution is to create a new database and re-index. However, if you have indexed
+data along with other data, this is not practical. Here is the script that
+helps remove processor's data to re-index it:
+
+```sql
+-- public schema
+-- 1/ remove everything for a given processor in block table
+DELETE FROM block WHERE network = 'polygon-mainnet';
+-- 2/ remove everything for a given processor in rental_safe_deployment table
+DELETE FROM rental_safe_deployment WHERE network = 'polygon-mainnet';
+-- 3/ remove everything for a given processor in rental_started table
+DELETE FROM rental_started WHERE network = 'polygon-mainnet';
+-- 4/ remove everything for a given processor in rental_stopped table
+DELETE FROM rental_stopped WHERE network = 'polygon-mainnet';
+
+-- processor's schema
+-- 1/ delete everything in hot_block table
+DELETE FROM polygon_mainnet_processor.hot_block;
+-- 2/ delete everything in hot_change_log table
+DELETE FROM polygon_mainnet_processor.hot_change_log;
+-- 3/ delete everything in status table
+DELETE FROM polygon_mainnet_processor.status;
+```
+
+Finally, there is no downside other than extra db space to set high finality.
+For polygon mainnet, for example, subsquid team is using 200 blocks. Set
+very high finality and be happy.
+
 ### Prod Checklist
 
 Right now, we are writing everything into the `main` branch of neondb.

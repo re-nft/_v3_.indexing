@@ -22,13 +22,8 @@ const endBlock = toBlockArg ? Number(toBlockArg.split("=")[1]) : undefined;
 
 start({
   dbOptions: { stateSchema: "eth_sepolia_processor" },
-  // I went through forked blocks here:
   // https://sepolia.etherscan.io/blocks_forked?p=1 and I could only find one
-  // case where re-org depth exceeded 5 blocks: 22 blocks if re-org happens, I
-  // am not sure about this, because squid is supposed to handle automatically,
-  // but if error happens, all we would have to do is re-run / re-deploy the
-  // squid. So re-deploying once a year (for sepolia) is fine.
-  finalityConfirmation: 6,
+  finalityConfirmation: 75,
   network: NETWORK.ETH_SEPOLIA,
   createAddress: "0xced95c21500c0ffb977f9a8a9b656164a41630c1",
   stopAddress: "0x013c420fbb9bfa135f8fcecfbcfa70a577f0b4fa",
