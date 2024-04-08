@@ -108,6 +108,45 @@ DELETE FROM polygon_mainnet_processor.hot_change_log;
 DELETE FROM polygon_mainnet_processor.status;
 ```
 
+if any of the above tables are used in the data that sits alongside your indexed data
+there is **ABSOLUTELY NO EASY WAY AROUND** it and you might need to delete all the data...
+so make sure you set finality as high as possible so that this **never** happens
+
+For `finalityConfirmation` values, use this silly script in etherscan's forked blocks
+explorer to figure out the max reorg depth the chain has experienced (there is certainly
+a better way to do it):
+
+```js
+async function findMaxReorgDepth() {
+  const totalPages = 2169;
+  let maxReorgDepth = 0;
+
+  for (let page = 1; page <= totalPages; page++) {
+    const url = `https://etherscan.io/blocks_forked?ps=100&p=${page}`;
+    const response = await fetch(url);
+    const html = await response.text();
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const reorgDepthElements = doc.querySelectorAll(
+      ".table tbody tr td:nth-child(11)",
+    );
+
+    reorgDepthElements.forEach((element) => {
+      const reorgDepth = parseInt(element.textContent, 10);
+      if (reorgDepth > maxReorgDepth) {
+        maxReorgDepth = reorgDepth;
+      }
+    });
+
+    console.log(`page: ${page}, max reorg depth: ${maxReorgDepth}`);
+
+    // Delay before moving to the next page
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+}
+```
+
 Finally, there is no downside other than extra db space to set high finality.
 For polygon mainnet, for example, subsquid team is using 200 blocks. Set
 very high finality and be happy.

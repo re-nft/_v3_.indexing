@@ -23,7 +23,10 @@ const endBlock = toBlockArg ? Number(toBlockArg.split("=")[1]) : undefined;
 start({
   dbOptions: { stateSchema: "eth_sepolia_processor" },
   // https://sepolia.etherscan.io/blocks_forked?p=1 and I could only find one
-  finalityConfirmation: 75,
+  // DO NOT TOUCH finalityConfirmation
+  // higher reorg depth I have seen was 22. so 75 blocks should never
+  // cause corrupted state
+  finalityConfirmation: 100,
   network: NETWORK.ETH_SEPOLIA,
   createAddress: "0xced95c21500c0ffb977f9a8a9b656164a41630c1",
   stopAddress: "0x013c420fbb9bfa135f8fcecfbcfa70a577f0b4fa",
