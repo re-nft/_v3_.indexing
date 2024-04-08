@@ -14,7 +14,8 @@ if (!process.env.RPC_POLYGON_MAINNET_HTTP) {
 start({
   dbOptions: { stateSchema: "polygon_mainnet_processor" },
   // https://polygonscan.com/blocks_forked
-  finalityConfirmation: 20,
+  // we had 20 here, there was a re-org of 17 blocks and it corrupted our state
+  finalityConfirmation: 50,
   network: NETWORK.POLYGON_MAINNET,
   createAddress: "0x37B45F0810a0A0fc70B08Eed205cc07E57bD6452",
   stopAddress: "0xFfcF66DE71f13a4823334917A4D5a22302854D3A",
