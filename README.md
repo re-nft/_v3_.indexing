@@ -108,9 +108,19 @@ DELETE FROM polygon_mainnet_processor.hot_change_log;
 DELETE FROM polygon_mainnet_processor.status;
 ```
 
-if any of the above tables are used in the data that sits alongside your indexed data
-there is **ABSOLUTELY NO EASY WAY AROUND** it and you might need to delete all the data...
-so make sure you set finality as high as possible so that this **never** happens
+The above will only work in a setting where indexed data is not related to any
+other data in the same db. i.e. you are not persisting some other data in the
+db that depends on the above data. If so, read the note below.
+
+If you have indexed data sitting alongside other data, which in turn depends on indexed data,
+this is squid's recommended approach to resolving the reorg conflicts:
+
+```
+But is it possible to do it gradually, in 3 steps:
+1) Create new fields/tables releation_v2 or migarate old fields/tables with old_ prefix
+2) Re-sync a squid with new fields
+3) Delete old fields and data
+```
 
 For `finalityConfirmation` values, use this silly script in etherscan's forked blocks
 explorer to figure out the max reorg depth the chain has experienced (there is certainly
