@@ -14,7 +14,10 @@ if (!process.env.RPC_POLYGON_MAINNET_HTTP) {
 start({
   dbOptions: { stateSchema: "polygon_mainnet_processor" },
   // https://polygonscan.com/blocks_forked
-  finalityConfirmation: 200,
+  // found 194 block re-org. don't set too close to actual re-org
+  // we had corrupted indexer with finality 20 and re-org depth 17
+  // DONT TOUCH finalityConfirmation
+  finalityConfirmation: 250,
   network: NETWORK.POLYGON_MAINNET,
   createAddress: "0x37B45F0810a0A0fc70B08Eed205cc07E57bD6452",
   stopAddress: "0xFfcF66DE71f13a4823334917A4D5a22302854D3A",
