@@ -1,0 +1,28 @@
+manifestVersion: subsquid.io/v0.1
+name: endgame-prod
+version: 1
+description: "A squid that indexes endgame on eth mainnet and polygon"
+build:
+deploy:
+  addons:
+    rpc:
+      - eth:http
+      - polygon:http
+  secrets: ["ENDGAME_PROD_DB_NAME", "ENDGAME_PROD_DB_HOST", "ENDGAME_PROD_DB_USER", "ENDGAME_PROD_DB_PASS", "ENDGAME_PROD_DB_PORT", "DB_SSL", "RPC_ETH_MAINNET_HTTP", "RPC_POLYGON_MAINNET_HTTP"]
+  migrate:
+    cmd: ["echo"]
+
+  processor:
+    - name: eth-mainnet-processor
+      env:
+        SQD_ENV: production
+      cmd: ["node", "lib/processors/eth-mainnet.js"]
+    - name: polygon-mainnet-processor
+      env:
+        SQD_ENV: production
+      cmd: ["node", "lib/processors/polygon-mainnet.js"]
+
+scale:
+  dedicated: true
+  processor:
+    profile: small
