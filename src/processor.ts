@@ -14,7 +14,7 @@ import { Block } from "./model";
 
 // DO NOT USE DB_URL ABOMINATION
 // it ignores `database` name and writes everything to `postgres` database
-process.env.DB_URL = undefined;
+// -----
 // ! there is no clean way to do this
 // ! this is squid's team recommendation
 const sqd_env = process.env.SQD_ENV === 'production' ? 'PROD' : 'DEV'
