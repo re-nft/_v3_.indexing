@@ -161,11 +161,33 @@ Finally, there is no downside other than extra db space to set high finality.
 For polygon mainnet, for example, subsquid team is using 200 blocks. Set
 very high finality and be happy.
 
-### Prod Checklist
+## Prod
 
-Right now, we are writing everything into the `main` branch of neondb.
+### Architecture
 
-Non-prod indexing should be done in feature branches, instead.
+Production chains are written to prod db.
+
+Testnet chains are written to dev db.
+
+We have separate manifests for the above: `squid.prod.yaml` and `squid.dev.yaml` respectively.
+
+The reason we do not have a single manifest is because we want dev squid writing to a separate db.
+
+As of the time of writing: April 9th 2024, this was not achievable in a single manifest file.
+
+To deploy prod squid to the cloud:
+
+```bash
+sqd deploy -m squid.prod.yaml
+```
+
+To deploy dev squid to the cloud:
+
+```bash
+sqd deploy -m squid.dev.yaml
+```
+
+### Nice to have
 
 Writing data to non-"public" schema would be useful, that way we do not run risk of having api read or write from the wrong schema.
 
