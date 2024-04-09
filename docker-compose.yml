@@ -7,6 +7,6 @@ services:
       POSTGRES_DB: endgame-dev
       POSTGRES_PASSWORD: postgres
     ports:
-      - "${ENDGAME_DEV_DB_PORT}:5432"
+      - "5432:5432"
       # command: ["postgres", "-c", "log_statement=all"]
     shm_size: 1gb
