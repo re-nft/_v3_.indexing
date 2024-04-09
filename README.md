@@ -178,13 +178,13 @@ As of the time of writing: April 9th 2024, this was not achievable in a single m
 To deploy prod squid to the cloud:
 
 ```bash
-sqd deploy -m squid.prod.yaml
+sqd deploy . -m "squid.prod.yaml" --org zero-to-one
 ```
 
 To deploy dev squid to the cloud:
 
 ```bash
-sqd deploy -m squid.dev.yaml
+sqd deploy . -m "squid.dev.yaml" --org zero-to-one
 ```
 
 ### Nice to have
