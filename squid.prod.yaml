@@ -1,4 +1,4 @@
-manifestVersion: subsquid.io/v0.1
+manifestVersion: subsquid.io/v0.2
 name: endgame-prod
 version: 1
 description: "A squid that indexes endgame on eth mainnet and polygon"
