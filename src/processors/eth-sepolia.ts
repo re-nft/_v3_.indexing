@@ -1,5 +1,3 @@
-import { lookupArchive } from "@subsquid/archive-registry";
-
 import { NETWORK } from "../consts";
 import { start } from "../processor";
 
@@ -32,7 +30,7 @@ start({
   stopAddress: "0x013c420fbb9bfa135f8fcecfbcfa70a577f0b4fa",
   factoryAddress: "0xe06aed5d2f5c2624ded4a6413e67cd7caf7bb3ac",
   source: {
-    archive: lookupArchive("sepolia", { type: "EVM" }),
+    archive: "https://v2.archive.subsquid.io/network/ethereum-sepolia",
     chain: process.env.RPC_ETH_SEPOLIA_HTTP,
   },
   // block number where both rental factory and rental manager were deployed

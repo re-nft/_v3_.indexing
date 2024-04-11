@@ -1,5 +1,3 @@
-import { lookupArchive } from "@subsquid/archive-registry";
-
 import { NETWORK } from "../consts";
 import { start } from "../processor";
 
@@ -23,7 +21,7 @@ start({
   stopAddress: "0xFfcF66DE71f13a4823334917A4D5a22302854D3A",
   factoryAddress: "0x061c0aD85Cff923D1f26eF8bc11e32e07e58AFe6",
   source: {
-    archive: lookupArchive("polygon", { type: "EVM" }),
+    archive: "https://v2.archive.subsquid.io/network/polygon-mainnet",
     chain: process.env.RPC_POLYGON_MAINNET_HTTP,
   },
   startBlock: 55112484
