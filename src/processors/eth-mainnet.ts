@@ -1,5 +1,3 @@
-import { lookupArchive } from "@subsquid/archive-registry";
-
 import { NETWORK } from "../consts";
 import { start } from "../processor";
 
@@ -20,7 +18,7 @@ start({
   stopAddress: "0xFfcF66DE71f13a4823334917A4D5a22302854D3A",
   factoryAddress: "0x061c0aD85Cff923D1f26eF8bc11e32e07e58AFe6",
   source: {
-    archive: lookupArchive("eth-mainnet", { type: "EVM" }),
+    archive: "https://v2.archive.subsquid.io/network/ethereum-mainnet",
     chain: process.env.RPC_ETH_MAINNET_HTTP,
   },
   startBlock: 19520241
