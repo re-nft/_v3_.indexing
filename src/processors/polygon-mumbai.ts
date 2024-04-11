@@ -11,7 +11,8 @@ if (!process.env.RPC_POLYGON_TESTNET_HTTP) {
 
 start({
   dbOptions: { stateSchema: "polygon_mumbai_processor" },
-  finalityConfirmation: 50,
+  // DONT TOUCH finalityConfirmation
+  finalityConfirmation: 200,
   network: NETWORK.POLYGON_MUMBAI,
   createAddress: "0x77Bf6E3Fb58B9635e6d1A2112096Ef543a93C6b8",
   stopAddress: "0x856f90Cd46401F2376f32206E6785bE95F82F609",

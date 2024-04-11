@@ -1,0 +1,28 @@
+manifestVersion: subsquid.io/v0.1
+name: endgame-dev
+version: 1
+description: "A squid that indexes endgame on eth sepolia and polygon mumbai"
+build:
+deploy:
+  addons:
+    rpc:
+      - eth-sepolia:http
+      - polygon-testnet:http
+  secrets: ["ENDGAME_DEV_DB_NAME", "ENDGAME_DEV_DB_HOST", "ENDGAME_DEV_DB_USER", "ENDGAME_DEV_DB_PASS", "ENDGAME_DEV_DB_PORT", "DB_SSL", "RPC_ETH_SEPOLIA_HTTP", "RPC_POLYGON_MUMBAI_HTTP"]
+  migrate:
+    cmd: ["echo"]
+
+  processor:
+    - name: eth-sepolia-processor
+      env:
+        SQD_ENV: development
+      cmd: ["node", "lib/processors/eth-sepolia.js"]
+    - name: polygon-mumbai-processor
+      env:
+        SQD_ENV: development
+      cmd: ["node", "lib/processors/polygon-mumbai.js"]
+
+scale:
+  dedicated: true
+  processor:
+    profile: small

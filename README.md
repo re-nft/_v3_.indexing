@@ -77,11 +77,117 @@ sqd deploy .
 
 make sure your `sqd` is `@ 2.7.0`
 
-### Prod Checklist
+## Gotchas
 
-Right now, we are writing everything into the `main` branch of neondb.
+You can corrupt your processor's state by setting finality too low.
 
-Non-prod indexing should be done in feature branches, instead.
+We had polygon mainnet processor corrupt the state with finality 20 and re-org: 17 blocks.
+
+If your subsquid indexed data is not in the same db as your other data, then easiest
+solution is to create a new database and re-index. However, if you have indexed
+data along with other data, this is not practical. Here is the script that
+helps remove processor's data to re-index it:
+
+```sql
+-- public schema
+-- 1/ remove everything for a given processor in block table
+DELETE FROM block WHERE network = 'polygon-mainnet';
+-- 2/ remove everything for a given processor in rental_safe_deployment table
+DELETE FROM rental_safe_deployment WHERE network = 'polygon-mainnet';
+-- 3/ remove everything for a given processor in rental_started table
+DELETE FROM rental_started WHERE network = 'polygon-mainnet';
+-- 4/ remove everything for a given processor in rental_stopped table
+DELETE FROM rental_stopped WHERE network = 'polygon-mainnet';
+
+-- processor's schema
+-- 1/ delete everything in hot_block table
+DELETE FROM polygon_mainnet_processor.hot_block;
+-- 2/ delete everything in hot_change_log table
+DELETE FROM polygon_mainnet_processor.hot_change_log;
+-- 3/ delete everything in status table
+DELETE FROM polygon_mainnet_processor.status;
+```
+
+The above will only work in a setting where indexed data is not related to any
+other data in the same db. i.e. you are not persisting some other data in the
+db that depends on the above data. If so, read the note below.
+
+If you have indexed data sitting alongside other data, which in turn depends on indexed data,
+this is squid's recommended approach to resolving the reorg conflicts:
+
+```
+But is it possible to do it gradually, in 3 steps:
+1) Create new fields/tables releation_v2 or migarate old fields/tables with old_ prefix
+2) Re-sync a squid with new fields
+3) Delete old fields and data
+```
+
+For `finalityConfirmation` values, use this silly script in etherscan's forked blocks
+explorer to figure out the max reorg depth the chain has experienced (there is certainly
+a better way to do it):
+
+```js
+async function findMaxReorgDepth() {
+  const totalPages = 2169;
+  let maxReorgDepth = 0;
+
+  for (let page = 1; page <= totalPages; page++) {
+    const url = `https://etherscan.io/blocks_forked?ps=100&p=${page}`;
+    const response = await fetch(url);
+    const html = await response.text();
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const reorgDepthElements = doc.querySelectorAll(
+      ".table tbody tr td:nth-child(11)",
+    );
+
+    reorgDepthElements.forEach((element) => {
+      const reorgDepth = parseInt(element.textContent, 10);
+      if (reorgDepth > maxReorgDepth) {
+        maxReorgDepth = reorgDepth;
+      }
+    });
+
+    console.log(`page: ${page}, max reorg depth: ${maxReorgDepth}`);
+
+    // Delay before moving to the next page
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+}
+```
+
+Finally, there is no downside other than extra db space to set high finality.
+For polygon mainnet, for example, subsquid team is using 200 blocks. Set
+very high finality and be happy.
+
+## Prod
+
+### Architecture
+
+Production chains are written to prod db.
+
+Testnet chains are written to dev db.
+
+We have separate manifests for the above: `squid.prod.yaml` and `squid.dev.yaml` respectively.
+
+The reason we do not have a single manifest is because we want dev squid writing to a separate db.
+
+As of the time of writing: April 9th 2024, this was not achievable in a single manifest file.
+
+To deploy prod squid to the cloud:
+
+```bash
+sqd deploy . -m "squid.prod.yaml" --org zero-to-one
+```
+
+To deploy dev squid to the cloud:
+
+```bash
+sqd deploy . -m "squid.dev.yaml" --org zero-to-one
+```
+
+### Nice to have
 
 Writing data to non-"public" schema would be useful, that way we do not run risk of having api read or write from the wrong schema.
 
