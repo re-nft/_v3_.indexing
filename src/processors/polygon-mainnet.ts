@@ -1,5 +1,3 @@
-import { lookupArchive } from "@subsquid/archive-registry";
-
 import { NETWORK } from "../consts";
 import { start } from "../processor";
 
